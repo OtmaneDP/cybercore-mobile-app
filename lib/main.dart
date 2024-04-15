@@ -10,6 +10,8 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/pages/home_page.dart';
+import 'package:fluttertest/pages/login_page.dart';
+import 'package:fluttertest/pages/product_details.dart';
 
 void main() {
   runApp(TextChange());
@@ -36,7 +38,5 @@ class TextChangeState extends State<TextChange>{
       debugShowCheckedModeBanner: false,
        home: HomePage(),
     );
-  }
-
-    
+  } 
 }

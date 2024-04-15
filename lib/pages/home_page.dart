@@ -1,12 +1,15 @@
 
 
 import 'dart:ffi';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertest/components/product.dart';
 import 'package:fluttertest/pages/login_page.dart';
+import 'package:fluttertest/pages/product_details.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
@@ -21,32 +24,189 @@ class HomePageState extends State<HomePage>{
 
     Widget build(BuildContext context){
            return Scaffold(
-             appBar: AppBar(
-                title: Text("first child",),
-                backgroundColor:Color.fromARGB(255, 243, 243, 243),
-                elevation: 5,
-                shadowColor: Color.fromARGB(255, 255, 255, 255),
-             ),
              body: Container(
               padding: EdgeInsets.all(10),
-              color: Color.fromARGB(255, 255, 249, 249),
+              color: Colors.white70,
               child: ListView(
+                physics: BouncingScrollPhysics(),
                 children: [
-                    Container(
-                      height: 100,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1,color:Colors.black),
+                  ListTile(
+                    trailing: Icon(Icons.menu),
+                    title: Expanded(
+                      child: TextFormField(
+                        cursorWidth: 0.4,
+                        cursorHeight: 21,
+                        cursorColor: Colors.grey,
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: "Search",
+                          border:InputBorder.none,
+                          filled: true,
+                          fillColor: Colors.grey[100],
+                          hoverColor: Colors.grey[200],
+                        ),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                        TextFormField()
-                      ],),
                     ),
+                  ), 
+                  SizedBox(height: 15,),
+                  Text("Categories",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(190, 0, 0, 0),
+                    ),
+                  ),
+                  Container(
+                    height: 126,
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: ListView(
+                         scrollDirection: Axis.horizontal,
+                         children: [
+                            Container(
+                              width: 100,
+                              child:Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 80,
+                                    height: 80,
+                                    child: Icon(Icons.laptop,size: 20,color: Color.fromARGB(255, 0, 84, 153),),
+                                    decoration:BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(50),
+                                      boxShadow: [BoxShadow(
+                                        offset: Offset(0,0),
+                                        color:Color.fromARGB(255, 220, 220, 220),
+                                        blurRadius: 4,
+                                      )],
+                                    ),
+                                  ),
+                                  Text("Laptop",style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color:Color.fromARGB(190, 0, 0, 0),
+                                  ),),
+                                ],
+                              ),                              
+                            ),
+                            Container(
+                              width: 100,
+                              child:Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 80,
+                                    height: 80,
+                                    child: Icon(Icons.mobile_off,size: 20,color: Color.fromARGB(255, 0, 84, 153),),
+                                    decoration:BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(50),
+                                      boxShadow: [BoxShadow(
+                                        offset: Offset(0,0),
+                                        color:Color.fromARGB(255, 220, 220, 220),
+                                        blurRadius: 4,
+                                      )],
+                                    ),
+                                  ),
+                                  Text("Mobile",style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color:Color.fromARGB(190, 0, 0, 0),
+                                  ),),
+                                ],
+                              ),                              
+                            ),
+                            Container(
+                              width: 100,
+                              child:Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 80,
+                                    height: 80,
+                                    child: Icon(Icons.camera,size: 20,color: Color.fromARGB(255, 0, 84, 153),),
+                                    decoration:BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(50),
+                                      boxShadow: [BoxShadow(
+                                        offset: Offset(0,0),
+                                        color:Color.fromARGB(255, 220, 220, 220),
+                                        blurRadius: 4,
+                                      )],
+                                    ),
+                                  ),
+                                  Text("Laptop",style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color:Color.fromARGB(190, 0, 0, 0),
+                                  ),),
+                                ],
+                              ),                              
+                            ),
+                            Container(
+                              width: 100,
+                              child:Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 80,
+                                    height: 80,
+                                    child: Icon(Icons.laptop,size: 20,color: Color.fromARGB(255, 0, 84, 153),),
+                                    decoration:BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(50),
+                                      boxShadow: [BoxShadow(
+                                        offset: Offset(0,0),
+                                        color:Color.fromARGB(255, 220, 220, 220),
+                                        blurRadius: 4,
+                                      )],
+                                    ),
+                                  ),
+                                  Text("Laptop",style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color:Color.fromARGB(190, 0, 0, 0),
+                                  ),),
+                                ],
+                              ),                              
+                            ),
+                         ],
+                      ),
+                  ),
+                  SizedBox(height: 20,),
+                  Text("lest Steeling",
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(190, 0, 0, 0),
+                  ),
+                  ),
+                  const Divider(
+                    height: 7,
+                    endIndent: 200,
+                    indent: 2,
+                    thickness: 0.6,
+                    color: Colors.black87,
+                  ),
+                  SizedBox(height: 20,),
+                  GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                     physics: NeverScrollableScrollPhysics(),
+                     shrinkWrap: true,
+                     children: [
+                        InkWell(
+                          onTap: (){
+                            _toDetails(Product(
+                              title: "Nike cascet",
+                              imagePath: "images/photo (8).jpg")
+                            );
+                          },
+                          child: Product(
+                            title: "Nike cascet",
+                            imagePath: "images/photo (8).jpg",
+                          ),
+                        ),
+                     ],
+                  ),
                 ],
               ),
-               
              ),
              bottomNavigationBar: Container(
                decoration: BoxDecoration(
@@ -62,23 +222,18 @@ class HomePageState extends State<HomePage>{
                child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  IconButton(onPressed: null, icon: Icon(Icons.home,color: Colors.blue,),
-                     mouseCursor: MaterialStateMouseCursor.clickable,
-                     splashColor: Colors.grey,
-                  ),
-                  IconButton(onPressed: null, icon: Icon(Icons.store,color: Colors.blue),
-                    mouseCursor: MaterialStateMouseCursor.clickable,
-                    splashColor: Colors.grey,
-                  ),
-                  IconButton(onPressed: null, icon:Icon(Icons.notifications,color: Colors.blue),
-                    mouseCursor: MaterialStateMouseCursor.clickable,
-                    splashColor: Colors.grey,
-                  )
+                  IconButton(onPressed:null, icon: Icon(Icons.home,color: Colors.blue)),
+                  IconButton(onPressed:null, icon: Icon(Icons.store_rounded,color: Colors.blue)),
+                  IconButton(onPressed:null, icon: Icon(Icons.notifications,color: Colors.blue)),
                 ],
                ),
              ),
            );
     }
-
+void _toDetails(Product product){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context){
+    return ProductDetails(product: product);
+  }));
+}
 
 }
