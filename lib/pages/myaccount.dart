@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertest/main.dart';
+import 'package:fluttertest/pages/changepassword_page.dart';
 
 class MyAccountPage extends StatefulWidget {
+  bool messageNotifState = false;
+  bool appNotifState = false;
   MyAccountPage({super.key});
 
   MyAccountPageState createState() {
@@ -31,7 +36,7 @@ class MyAccountPageState extends State<MyAccountPage> {
                 title: Container(
                   width: 80,
                   height: 80,
-                  child: CircleAvatar(),
+                  child: CircleAvatar(child: Icon(Icons.person,size: 50,color: Colors.deepPurpleAccent,),),
                 ),
                 subtitle: Column(
                   children: [Text("Otmane"), Text("#id 5474748849")],
@@ -143,11 +148,19 @@ class MyAccountPageState extends State<MyAccountPage> {
                  Divider(
                     color: Colors.grey[200],
                   ),
-                  Text(
-                    "Change Password",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
+                  InkWell(
+                    onTap: (){
+                      print("click");
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                        return ChangePasswordPage();
+                      }));
+                    },
+                    child: Text(
+                      "Change Password",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
                 ],
@@ -161,8 +174,9 @@ class MyAccountPageState extends State<MyAccountPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              padding: EdgeInsets.all(15),
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(7),
@@ -187,13 +201,16 @@ class MyAccountPageState extends State<MyAccountPage> {
                           color: Colors.black87,
                         ),
                       ),
-                      Switch(
-                        value: false, 
-                        dragStartBehavior: DragStartBehavior.down,
-                        onChanged: (val){
-                          val = true ;
-                        },
-                        trackOutlineWidth: MaterialStateProperty.all(1),
+                      Transform.scale(
+                        scale: 0.8,
+                        child: Switch(
+                          value: widget.appNotifState, 
+                          onChanged: (value){
+                            setState(() {
+                              widget.appNotifState ? widget.appNotifState = false : widget.appNotifState = true;
+                            });
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -211,33 +228,23 @@ class MyAccountPageState extends State<MyAccountPage> {
                           color: Colors.black87,
                         ),
                       ),
-                      Switch(
-                        value: true,
-                        onChanged: (value){
-                          value = true;
-                        },
-                        activeColor: Colors.deepPurpleAccent[100],
-                        trackOutlineWidth: MaterialStateProperty.all(1),
+                      Transform.scale(
+                        scale: 0.8,
+                        child: Switch(
+                            trackOutlineWidth: MaterialStateProperty.all(0),
+                            value: widget.messageNotifState,
+                            onChanged: (value){
+                              setState(() {
+                                widget.messageNotifState ? widget.messageNotifState = false : widget.messageNotifState = true;
+                              });
+                            },
+                          ),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            // Expanded(
-            //   child: Container(
-            //     alignment: Alignment.center,
-            //     child: MaterialButton(
-            //       disabledColor: Colors.deepPurpleAccent,
-            //       minWidth: 200,
-            //       height: 20,
-            //       padding: EdgeInsets.all(18),
-            //       textColor: Colors.white,
-            //       child: Text("Log Out"),
-            //       onPressed: null,
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

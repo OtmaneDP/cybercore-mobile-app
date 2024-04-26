@@ -3,7 +3,6 @@
 
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -11,6 +10,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/pages/home_page.dart';
 import 'package:fluttertest/pages/login_page.dart';
+import 'package:fluttertest/pages/main_screen.dart';
 import 'package:fluttertest/pages/product_details.dart';
 
 void main() {
@@ -36,7 +36,7 @@ class TextChangeState extends State<TextChange>{
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       home: HomePage(),
+      home: HomePage(),
     );
   } 
 }

@@ -122,26 +122,44 @@ class HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 236, 236, 236),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 10),
-              color: Colors.black,
-              blurRadius: 10,
-            ),
-          ],
+          color: Colors.transparent,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-                onPressed: null, icon: Icon(Icons.home, color: Colors.blue)),
+                onPressed: null, icon: Icon(Icons.home_outlined, color: Colors.black)),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(width: 2,color: Colors.deepPurpleAccent),
+              ),
+              child:Stack(
+                clipBehavior: Clip.none,
+                children: [
+                   IconButton(
+                  onPressed: (){
+                    print("test");
+                  },
+                  icon: Icon(Icons.shopping_cart_outlined, color: Colors.deepPurpleAccent)),
+                  Positioned(
+                    right: -7,
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 15,
+                      height: 15,
+                      decoration: BoxDecoration(
+                        color: Colors.red, 
+                        borderRadius: BorderRadius.circular(50)),
+                        child: Text("1",style: TextStyle(color: Colors.white,fontSize: 9.5,fontWeight: FontWeight.w700),),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             IconButton(
                 onPressed: null,
-                icon: Icon(Icons.store_rounded, color: Colors.blue)),
-            IconButton(
-                onPressed: null,
-                icon: Icon(Icons.notifications, color: Colors.blue)),
+                icon: Icon(Icons.notifications_none_sharp, color: Colors.black)),
           ],
         ),
       ),
@@ -163,13 +181,8 @@ class HomePageState extends State<HomePage> {
           Container(
             width: 80,
             height: 80,
-            child: Icon(
-              Icons.laptop,
-              size: 20,
-              color: Colors.deepPurple,
-            ),
+            child: ClipRRect(child: Image.asset("images/test.jpg",fit: BoxFit.fill,), borderRadius: BorderRadius.circular(50),),
             decoration: BoxDecoration(
-              color: Colors.grey[200],
               borderRadius: BorderRadius.circular(50),
               boxShadow: [
                 BoxShadow(

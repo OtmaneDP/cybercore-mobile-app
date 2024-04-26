@@ -7,11 +7,13 @@ class CostumDrawerChild extends StatelessWidget{
   final String? title;
   final Icon? icon; 
   final Widget? destinationPage;
+  final bool? counted;
   const CostumDrawerChild({
     super.key,
     required this.title, 
     required this.icon,
     required this.destinationPage,
+    this.counted
   });
 
   Widget build(BuildContext context){
