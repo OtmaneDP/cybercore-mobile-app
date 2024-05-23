@@ -2,7 +2,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertest/models/user_model.dart';
+import 'package:fluttertest/pages/home_page.dart';
+import 'package:fluttertest/pages/login_screen.dart';
+
 class MainScreen extends StatefulWidget {
+  
   MainScreen({super.key});
 
   var myCarouselController = CarouselController();
@@ -14,135 +19,225 @@ class MainScreen extends StatefulWidget {
 }
 
 class MainScreenState extends State<MainScreen> {
-  
   @override
   Widget build(BuildContext) {
-    
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.store_sharp,color: Colors.deepPurpleAccent,),
-        title: Text("Cyber Core"),
-        actions: [
-          Container(
-            margin: EdgeInsets.only(right: 10),
-            child:Icon (Icons.menu),
-          ),
-        ],
-      ),
       body: Container(
-        alignment: Alignment.center,
-        child: Row(
+        child: Stack(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 10),
-              alignment: Alignment.centerLeft,
-              // color: Colors.red,
-              width: MediaQuery.sizeOf(context).width/2,
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("Mouse",style: TextStyle(
-                      fontSize: 15,
-                      height: 0.2,
-                      color: Colors.grey
-                    ),),
-                    Text("Configuies",style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 40,
-                    ),),
-                    Text("Keybords",style: TextStyle(
-                      height: 0.2,
-                      fontSize: 15,
-                      color: Colors.grey
-                    ),),
-                    SizedBox(height: 45,),
-                    MaterialButton(
-                      padding: EdgeInsets.symmetric(horizontal: 50),
-                      height: 40,
-                      onPressed: null,
-                      textColor: Colors.white,
-                      child: Text("Sign In"),
-                      disabledColor: Colors.deepPurpleAccent,  
-                    )
-
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              width: MediaQuery.sizeOf(context).width/2,
-              height: MediaQuery.sizeOf(context).height,
-              child: Stack(
+              child: Row(
                 children: [
                   Container(
-                    height: MediaQuery.sizeOf(context).height,
-                    child: CarouselSlider(
-                      carouselController: widget.myCarouselController,
-                      items: [
-                        Container(
-                          alignment: Alignment.center,
-                          height: MediaQuery.sizeOf(context).height,
-                          child: Image.asset("images/p (7).jpg"),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          height: MediaQuery.sizeOf(context).height,
-                          child: Image.asset("images/p (1).jpg"),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          height: MediaQuery.sizeOf(context).height,
-                          child: Image.asset("images/p (3).jpg"),
-                        ),
-                      ], 
-                      options: CarouselOptions(
-                        
-                        autoPlay: true,
-                        scrollDirection: Axis.vertical,
-                        onPageChanged: (index,reson){
-                         
-                        },
-                        
-                      )),
-                  ),
-                  Positioned(
-                    bottom: 50,
-                    right: 0,
+                    color: Color.fromARGB(150, 124, 77, 255),
+                    padding: EdgeInsets.only(left: 10),
+                    alignment: Alignment.centerLeft,
+                    width: MediaQuery.sizeOf(context).width / 2 + 12,
                     child: Container(
-            
-                      height: 120,
-                      width: 100,
+                      clipBehavior: Clip.none,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Radio(
-                            toggleable: true,
-                            value: false, 
-                            groupValue: null,
-                            onChanged: (value){
-                              setState(() {
-                                widget.myCarouselController.animateToPage(0);
-                              });
-                            }
+                          Text(
+                            "Gamming laptops",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 37,
+                              color: Colors.deepPurpleAccent,
+                              height: 1.2,
+                            ),
                           ),
-                           Radio(value: false, groupValue: null, onChanged: (value){
-                              widget.myCarouselController.animateToPage(1);
-                          }),
-                           Radio(value: false, groupValue: null, onChanged: (value){
-                              widget.myCarouselController.animateToPage(2);
-                          }),
+                          Text(
+                            "Mouse & Keybors and More Offers",
+                            style: TextStyle(
+                                height: 1.3,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black54),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          getSignInButton(),
+                          Container(
+                            height: 320,
+                            padding: EdgeInsets.only(top: 90),
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  contentPadding: EdgeInsets.only(left: 10),
+                                  leading: Icon(
+                                    Icons.shopping_cart,
+                                    color: Colors.white,
+                                  ),
+                                  title: Text(
+                                    "Finde your favorite Items",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                ListTile(
+                                  contentPadding: EdgeInsets.only(left: 10),
+                                  leading: Icon(
+                                    Icons.paid_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  title: Text(
+                                    "Esy & Safe Payment ",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                ListTile(
+                                  contentPadding: EdgeInsets.only(left: 10),
+                                  leading: Icon(
+                                    Icons.delivery_dining_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  title: Text(
+                                    "Product Delivery at Home",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
+                    ),
+                  ),
+                  Container(
+                    color: Colors.white70,
+                    width: MediaQuery.sizeOf(context).width / 2 - 40,
+                    height: MediaQuery.sizeOf(context).height,
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: MediaQuery.sizeOf(context).height,
+                          child: CarouselSlider(
+                              carouselController: widget.myCarouselController,
+                              items: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  height: MediaQuery.sizeOf(context).height,
+                                  child: Image.asset("images/p (3).jpg"),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  height: MediaQuery.sizeOf(context).height,
+                                  child: Image.asset("images/p (10).jpg"),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  height: MediaQuery.sizeOf(context).height,
+                                  child: Image.asset("images/p (9).jpg"),
+                                ),
+                              ],
+                              options: CarouselOptions(
+                                autoPlay: true,
+                                scrollDirection: Axis.vertical,
+                                onPageChanged: (index, reson) {},
+                              )),
+                        ),
+                        Positioned(
+                          bottom: 50,
+                          right: 0,
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            height: 150,
+                            width: 100,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Radio(
+                                    focusColor: Colors.deepPurpleAccent,
+                                    toggleable: true,
+                                    value: false,
+                                    groupValue: null,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        widget.myCarouselController
+                                            .animateToPage(0);
+                                      });
+                                    }),
+                                Radio(
+                                    value: false,
+                                    groupValue: null,
+                                    onChanged: (value) {
+                                      widget.myCarouselController
+                                          .animateToPage(1);
+                                    }),
+                                Radio(
+                                    value: false,
+                                    groupValue: null,
+                                    onChanged: (value) {
+                                      widget.myCarouselController
+                                          .animateToPage(2);
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
+            Positioned(
+                child: Container(
+              alignment: Alignment.bottomCenter,
+              height: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  IconButton(
+                    icon :Icon(Icons.shopping_cart_checkout_rounded,
+                    color: Colors.white,
+                    size: 30,),
+                    onPressed: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                      return HomePage();
+                     }));                      
+                    },
+                  ),
+                  Text(
+                    "Cyber Core",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Icon(Icons.menu_outlined)
+                ],
+              ),
+            )),
           ],
         ),
       ),
+    );
+  }
+
+//  get Sign in Button tumporely
+
+  Widget getSignInButton() {
+    return MaterialButton(
+      elevation: 1.5,
+      padding: EdgeInsets.symmetric(horizontal: 50),
+      height: 40,
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context){
+          return LoginScreen();
+        }));
+      },
+      textColor: Colors.white,
+      child: Text("Sign In"),
+      color: Colors.deepPurpleAccent,
     );
   }
 }

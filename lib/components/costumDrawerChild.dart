@@ -13,7 +13,7 @@ class CostumDrawerChild extends StatelessWidget{
     required this.title, 
     required this.icon,
     required this.destinationPage,
-    this.counted
+    this.counted, 
   });
 
   Widget build(BuildContext context){

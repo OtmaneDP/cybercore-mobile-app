@@ -54,26 +54,26 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                     ],
                   ),
                 ),
-                CostumInputField(
-                  prefixIcon: Icon(Icons.https,color: Colors.grey,),
-                  label: Text("password",style: TextStyle(
-                    fontSize: 15,
-                  ),),
-                ),
-                CostumInputField(
-                  label: Text("new password",style: TextStyle(
-                    fontSize: 15,
-                  ),),
-                  prefixIcon: Icon(Icons.https,color: Colors.grey,),
-                  sufixIcon: Icon(Icons.remove_red_eye,color: Colors.grey,),
-                ),
-                CostumInputField(
-                  label: Text("confirme your password",style: TextStyle(
-                    fontSize: 15,
-                  ),),
-                  prefixIcon: Icon(Icons.https,color: Colors.grey,),
-                  sufixIcon: Icon(Icons.remove_red_eye,color: Colors.grey,),
-                ),
+                // CostumInputField(
+                //   prefixIcon: Icon(Icons.https,color: Colors.grey,),
+                //   label: Text("password",style: TextStyle(
+                //     fontSize: 15,
+                //   ),),
+                // ),
+                // CostumInputField(
+                //   label: Text("new password",style: TextStyle(
+                //     fontSize: 15,
+                //   ),),
+                //   prefixIcon: Icon(Icons.https,color: Colors.grey,),
+                //   sufixIcon: Icon(Icons.remove_red_eye,color: Colors.grey,),
+                // ),
+                // CostumInputField(
+                //   label: Text("confirme your password",style: TextStyle(
+                //     fontSize: 15,
+                //   ),),
+                //   prefixIcon: Icon(Icons.https,color: Colors.grey,),
+                //   sufixIcon: Icon(Icons.remove_red_eye,color: Colors.grey,),
+                // ),
                 Container(
                   height: 60,
                   child: Column(

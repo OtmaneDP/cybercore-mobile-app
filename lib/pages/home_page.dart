@@ -1,26 +1,40 @@
 import 'dart:ffi';
 import 'dart:ui';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertest/components/catigory.dart';
 import 'package:fluttertest/components/costumdrawer.dart';
 import 'package:fluttertest/components/product.dart';
-import 'package:fluttertest/pages/login_page.dart';
+import 'package:fluttertest/controllers/authcontroller.dart';
+import 'package:fluttertest/helperclasses/auth.dart';
+import 'package:fluttertest/pages/login_screen.dart';
 import 'package:fluttertest/pages/product_details.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+
+  List ? products ;
+  List? catigorys;
+  HomePage({
+    super.key,
+    this.products,
+    this.catigorys
+  });
+  
 
   @override
   HomePageState createState() {
     return HomePageState();
   }
+  
 }
 
 @override
 class HomePageState extends State<HomePage> {
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +66,6 @@ class HomePageState extends State<HomePage> {
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
-            SizedBox(height: 20,),
             Text(
               "Categories",
               style: TextStyle(
@@ -64,15 +77,14 @@ class HomePageState extends State<HomePage> {
             Container(
               height: 130,
               padding: EdgeInsets.symmetric(vertical: 10),
-              child: ListView(
+              child: ListView.builder(
                 padding: EdgeInsets.only(top: 2),
                 scrollDirection: Axis.horizontal,
-                children: [
-                  _getCategorie(),
-                  _getCategorie(),
-                  _getCategorie(),
-                  _getCategorie(),
-                ],
+                itemCount: widget.catigorys!.length,
+                itemBuilder: (context, index) => Catigory(
+                  catigoryInfo: widget.catigorys![index],
+                  isNewtworkImage: true,
+                ),
               ),
             ),
             SizedBox(
@@ -105,15 +117,14 @@ class HomePageState extends State<HomePage> {
               ),
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 5,
+              itemCount: widget.products!.length,
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
-                  _toDetails(Product(
-                      title: "Nike cascet", imagePath: "images/pc.webp"));
+                  _toDetailsPage(widget.products![index]);
                 },
                 child: Product(
-                  title: "Nike cascet",
-                  imagePath: "images/test.png",
+                  productInfo: widget.products![index],
+                  isNewtworkImage: true,
                 ),
               ),
             ),
@@ -158,7 +169,9 @@ class HomePageState extends State<HomePage> {
               ),
             ),
             IconButton(
-                onPressed: null,
+                onPressed: ()async{
+                  // await Auth.user();
+                },
                 icon: Icon(Icons.notifications_none_sharp, color: Colors.black)),
           ],
         ),
@@ -166,42 +179,9 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  void _toDetails(Product product) {
+  void _toDetailsPage(Map productInfo) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return ProductDetails(product: product);
+      return ProductDetails(productInfo: productInfo);
     }));
-  }
-
-  Widget _getCategorie() {
-    return Container(
-      width: 100,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            child: ClipRRect(child: Image.asset("images/test.jpg",fit: BoxFit.fill,), borderRadius: BorderRadius.circular(50),),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 0),
-                  color: Color.fromARGB(255, 220, 220, 220),
-                  blurRadius: 4,
-                )
-              ],
-            ),
-          ),
-          Text(
-            "Laptop",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(190, 0, 0, 0),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

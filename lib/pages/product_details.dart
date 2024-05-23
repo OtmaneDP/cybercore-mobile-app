@@ -1,81 +1,60 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/product.dart';
 import 'package:fluttertest/pages/cart_page.dart';
 
-class ProductDetails extends StatelessWidget {
-  final Product? product;
-  const ProductDetails({
+class ProductDetails extends StatefulWidget {
+  final Map productInfo;
+  String? selectedColor;
+  var imageCarouselController = CarouselController();
+  ProductDetails({
     super.key,
-    required this.product,
+    required this.productInfo,
+    this.selectedColor,
   });
 
+  ProductDetailsState createState() {
+    return ProductDetailsState();
+  }
+}
+
+class ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: Container(
-      //   decoration: BoxDecoration(
-      //     color: Color.fromARGB(255, 236, 236, 236),
-      //     boxShadow: [
-      //       BoxShadow(
-      //         offset: Offset(0, 10),
-      //         color: Colors.black,
-      //         blurRadius: 10,
-      //       ),
-      //     ],
-      //   ),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //     children: [
-      //       IconButton(
-      //           onPressed: null, icon: Icon(Icons.home, color: Colors.blue)),
-      //       IconButton(
-      //           onPressed: null,
-      //           icon: Icon(Icons.store_rounded, color: Colors.blue)),
-      //       IconButton(
-      //           onPressed: null,
-      //           icon: Icon(Icons.notifications, color: Colors.blue)),
-      //     ],
-      //   ),
-      // ),
       appBar: AppBar(
         title: Text("Details Product"),
         // actions: [Icon(Icons.more_vert)],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 15,right: 7,bottom: 5),
+        padding: EdgeInsets.symmetric(horizontal: 5),
         color: Colors.white70,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(clipBehavior: Clip.none, children: [
               Container(
-                height: 250,
+                height: 300,
                 width: 500,
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(0, 4),
-                      color: Color.fromARGB(31, 100, 100, 100),
-                      blurRadius: 5,
-                    ),
-                  ]
-                ),
+                decoration: BoxDecoration(color: Colors.grey[100], boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 4),
+                    color: Color.fromARGB(31, 100, 100, 100),
+                    blurRadius: 5,
+                  ),
+                ]),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
-                  child: Image.asset(
-                  "images/test.png",
-                  fit: BoxFit.contain,
-                ),
+                  child: _getAnimtedImages(),
                 ),
               ),
               Positioned(
                 bottom: -20,
                 right: 10,
                 child: IconButton(
-                  onPressed: (){
+                  onPressed: () {
                     return null;
                   },
                   icon: Icon(
@@ -98,34 +77,38 @@ class ProductDetails extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Ponther S4 Lite",
+                              widget.productInfo["name"],
                               style: TextStyle(
-                                fontSize: 25,
+                                fontSize: 30,
+                                fontWeight: FontWeight.w600, 
+                                color: Color.fromARGB(221, 46, 46, 46)
+
                               ),
                             ),
                             Text(
-                              "Gaming Laptop",
+                              widget.productInfo["catigory"]["name"],
                               style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.black87,
+                                color: Colors.grey,
                               ),
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.star,
-                                  color: Color.fromARGB(255, 255, 230, 0),
-                                ),
-                                Icon(Icons.star,
-                                    color: Color.fromARGB(255, 255, 230, 0)),
-                                Icon(Icons.star,
-                                    color: Color.fromARGB(255, 255, 230, 0)),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.grey,
-                                ),
-                              ],
-                            )
+                            // this is commented tomporery
+                            // Row(
+                            //   children: [
+                            //     Icon(
+                            //       Icons.star,
+                            //       color: Color.fromARGB(255, 255, 230, 0),
+                            //     ),
+                            //     Icon(Icons.star,
+                            //         color: Color.fromARGB(255, 255, 230, 0)),
+                            //     Icon(Icons.star,
+                            //         color: Color.fromARGB(255, 255, 230, 0)),
+                            //     Icon(
+                            //       Icons.star,
+                            //       color: Colors.grey,
+                            //     ),
+                            //   ],
+                            // )
                           ],
                         ),
                       )),
@@ -133,9 +116,11 @@ class ProductDetails extends StatelessWidget {
                       child: Container(
                     alignment: Alignment.center,
                     child: Text(
-                      "3000 DZ",
+                      "${widget.productInfo["price"]} DZ",
                       style: TextStyle(
                         fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 55, 0, 207),
                       ),
                     ),
                   ))
@@ -145,15 +130,18 @@ class ProductDetails extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
+            Text("Ram Size"),
+             _getRamCheckBoxes(),
             Text(
-              "Select Ram Size",
-              style: TextStyle(fontSize: 17, color: Colors.black87),
+              "Color",
+               style: TextStyle(fontSize: 17, color: Colors.black54,fontWeight: FontWeight.w600),
             ),
-            _getRamCheckBoxes(),
+            SizedBox(height: 10,),
             _getRadiosButton(),
+            SizedBox(height: 15,),
             Text(
               "Description",
-              style: TextStyle(fontSize: 17),
+              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: Colors.black54), 
             ),
             SizedBox(
               height: 10,
@@ -206,17 +194,28 @@ class ProductDetails extends StatelessWidget {
   }
 
   Widget _getRadiosButton() {
+    int selectedRadioIndex;
     return Container(
-      height: 50,
+      height: 25,
       padding: EdgeInsets.zero,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Radio(value: false, groupValue: true, onChanged: null),
-          Radio(value: false, groupValue: true, onChanged: null),
-          Radio(value: false, groupValue: true, onChanged: null),
-          Radio(value: false, groupValue: true, onChanged: null)
-        ],
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 3,
+        itemBuilder: (contex, index) {
+          return Radio<String>(
+            materialTapTargetSize: MaterialTapTargetSize.padded,
+            visualDensity: VisualDensity.standard,
+            focusColor: Color.fromARGB(31, 33, 149, 243),
+            activeColor: Colors.blue,
+            hoverColor: Color.fromARGB(31, 33, 149, 243),
+            value: "blue${index}",
+            groupValue: widget.selectedColor,
+            onChanged: (value) {
+              setState(() {
+                widget.selectedColor = value!;
+              });
+          });
+        },
       ),
     );
   }
@@ -226,42 +225,7 @@ class ProductDetails extends StatelessWidget {
       child: ListView(
         children: [
           Text(
-            "sdfkdsjfksdjfkdsflsdfkdsfksdfssqdqsdqsdsqdqsdsqdsqdqsdsqdqsdsdfkdsjfksdjfkdsflsdfkdsfksdfssqdqsdqsdsdfdsfsd",
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 13,
-            ),
-          ),
-          Text(
-            "sdfkdsjfksdjfkdsflsdfkdsfksdfssqdqsdqsddfdsfsdfsd",
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 13,
-            ),
-          ),
-          Text(
-            "sdfkdsjfksdjfkdsflsdfkdsfksdfssqdqsdqsddsfsdfds",
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 13,
-            ),
-          ),
-          Text(
-            "sdfkdsjfksdjfkdsflsdfkdsfksdfssqdqsdqsd",
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 13,
-            ),
-          ),
-          Text(
-            "sdfkdsjfksdjfkdsflsdfkdsfksdfssqdqsdqsdfdsfsdfsdfdsfsd",
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 13,
-            ),
-          ),
-          Text(
-            "sdfkdsjfksdjfkdsflsdfkdsfksdfssqdqsdqsd",
+            widget.productInfo["description"],
             style: TextStyle(
               color: Colors.black87,
               fontSize: 13,
@@ -282,9 +246,12 @@ class ProductDetails extends StatelessWidget {
             onPressed: null,
             disabledColor: Colors.white,
             color: Colors.white,
-            child: Text("Boy Now",style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),),
+            child: Text(
+              "Boy Now",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             minWidth: 150,
             height: 45,
             textColor: Colors.deepPurpleAccent,
@@ -297,8 +264,8 @@ class ProductDetails extends StatelessWidget {
             minWidth: 150,
             height: 45,
             textColor: Colors.white,
-            onPressed:(){
-              Navigator.of(context).push(MaterialPageRoute(builder: (rout){
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (rout) {
                 return CartPage();
               }));
             },
@@ -306,5 +273,21 @@ class ProductDetails extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _getAnimtedImages() {
+    return CarouselSlider(
+
+        carouselController: widget.imageCarouselController,
+        items: List.generate(widget.productInfo["images"].length, (index) => Image.network(widget.productInfo["images"][index]["image_path"],)),
+        options: CarouselOptions(
+          autoPlay: true,
+          scrollDirection: Axis.horizontal,
+          onPageChanged: (index, reson) {},
+          viewportFraction: 1,
+          autoPlayAnimationDuration: Duration(seconds: 1),
+          animateToClosest: true,
+          autoPlayCurve: Easing.standard,
+        ));
   }
 }

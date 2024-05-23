@@ -4,14 +4,16 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/pages/home_page.dart';
-import 'package:fluttertest/pages/login_page.dart';
+import 'package:fluttertest/pages/login_screen.dart';
 import 'package:fluttertest/pages/main_screen.dart';
 import 'package:fluttertest/pages/product_details.dart';
+import 'package:fluttertest/pages/signup_screen.dart';
 
 void main() {
   runApp(TextChange());
@@ -26,17 +28,31 @@ class TextChange extends StatefulWidget{
     return TextChangeState();
   }
 }
-
 class TextChangeState extends State<TextChange>{
-  List<String> questions= ["question1","question2","question3","question4","question5"];
-  List<Text> answers = [];
-  int counter = 0;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home:MainScreen(),
     );
   } 
+
+  Widget _getTextSpan(){
+    return RichText(
+        text: TextSpan(
+          text: 'Don\'t have an account?', style: TextStyle(color: Colors.black, fontSize: 18),
+          children: [
+            TextSpan(text: 'Sign in', style: TextStyle(
+              color: Colors.deepOrangeAccent,
+              fontSize: 18),
+              recognizer: TapGestureRecognizer()..onTap = (){
+                print("hellow world");
+              }
+            ),
+          ],
+        ),
+        
+    );
+  }
 }

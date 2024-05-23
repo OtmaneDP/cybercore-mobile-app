@@ -3,13 +3,16 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertest/main.dart';
 import 'package:fluttertest/pages/changepassword_page.dart';
 
 class MyAccountPage extends StatefulWidget {
   bool messageNotifState = false;
   bool appNotifState = false;
-  MyAccountPage({super.key});
+  Map? userData; 
+  MyAccountPage({
+    super.key, 
+    this.userData,
+  });
 
   MyAccountPageState createState() {
     return MyAccountPageState();
@@ -39,74 +42,74 @@ class MyAccountPageState extends State<MyAccountPage> {
                   child: CircleAvatar(child: Icon(Icons.person,size: 50,color: Colors.deepPurpleAccent,),),
                 ),
                 subtitle: Column(
-                  children: [Text("Otmane"), Text("#id 5474748849")],
+                  children: [Text(widget.userData!["email"]), Text("#id ${widget.userData!["id"]}")],
                 ),
               ),
             ),
-            Text(
-              "Profile",
-              style: TextStyle(
-                color: Colors.black54,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromARGB(255, 240, 240, 240),
-                    offset: Offset(0, 0),
-                    blurRadius: 5,
-                  ),
-                ],
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(7),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Ot mane",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  Divider(
-                    color: Colors.grey[200],
-                  ),
-                  Text(
-                    "Ot mane",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  Divider(
-                    color: Colors.grey[200],
-                  ),
-                  Text(
-                    "Algier",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  Divider(
-                    color: Colors.grey[200],
-                  ),
-                  Text(
-                    "atmane@gmail.com",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Text(
+            //   "Profile",
+            //   style: TextStyle(
+            //     color: Colors.black54,
+            //     fontWeight: FontWeight.w500,
+            //   ),
+            // ),
+            // Container(
+            //   margin: EdgeInsets.only(top: 10, bottom: 10),
+            //   padding: EdgeInsets.all(15),
+            //   decoration: BoxDecoration(
+            //     boxShadow: [
+            //       BoxShadow(
+            //         color: Color.fromARGB(255, 240, 240, 240),
+            //         offset: Offset(0, 0),
+            //         blurRadius: 5,
+            //       ),
+            //     ],
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.circular(7),
+            //   ),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text(
+            //         "this is whene user created profile",
+            //         style: TextStyle(
+            //           fontWeight: FontWeight.w500,
+            //           color: Colors.black87,
+            //         ),
+            //       ),
+            //       Divider(
+            //         color: Colors.grey[200],
+            //       ),
+            //       Text(
+            //         "this is whene user created profile",
+            //         style: TextStyle(
+            //           fontWeight: FontWeight.w500,
+            //           color: Colors.black87,
+            //         ),
+            //       ),
+            //       Divider(
+            //         color: Colors.grey[200],
+            //       ),
+            //       Text(
+            //         "this is whene user created profile",
+            //         style: TextStyle(
+            //           fontWeight: FontWeight.w500,
+            //           color: Colors.black87,
+            //         ),
+            //       ),
+            //       Divider(
+            //         color: Colors.grey[200],
+            //       ),
+            //       Text(
+            //         widget.userData!["email"],
+            //         style: TextStyle(
+            //           fontWeight: FontWeight.w500,
+            //           color: Colors.black87,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Text(
               "Settings",
               style: TextStyle(

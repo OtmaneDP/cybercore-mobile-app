@@ -43,12 +43,12 @@ class FavoritePageState extends State<FavoritePage>{
                   ),
               
                 children: [
-                  Product(imagePath: "images/test.png", title: "product"),
-                  Product(imagePath: "images/test.png", title: "product"),
-                  Product(imagePath: "images/test.png", title: "product"),
-                  Product(imagePath: "images/test.png", title: "product"),
-                   Product(imagePath: "images/test.png", title: "product"),
-                  Product(imagePath: "images/test.png", title: "product"),
+                  // Product(imagePath: "images/test.png", title: "product"),
+                  // Product(imagePath: "images/test.png", title: "product"),
+                  // Product(imagePath: "images/test.png", title: "product"),
+                  // Product(imagePath: "images/test.png", title: "product"),
+                  //  Product(imagePath: "images/test.png", title: "product"),
+                  // Product(imagePath: "images/test.png", title: "product"),
               
                 ],
               ),
