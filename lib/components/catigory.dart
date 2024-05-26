@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 class Catigory extends StatelessWidget{
   Map? catigoryInfo ;
   bool? isNewtworkImage = true;
+  bool? isSlected ;
   Catigory({
     super.key,
     this.catigoryInfo,
     this.isNewtworkImage,
+    this.isSlected = false,
   });
   @override
   Widget build(BuildContext context){
@@ -19,8 +21,9 @@ class Catigory extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            width:  80,
-            height: 80,
+            width:  70,
+            height: 70,
+            padding: EdgeInsets.all(2),
             child: ClipRRect(
               clipBehavior: Clip.hardEdge,
               borderRadius: BorderRadius.circular(50),
@@ -29,12 +32,12 @@ class Catigory extends StatelessWidget{
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(50),
-              // border: Border.all(width: 2,color: Colors.deepPurpleAccent),
+              border: isSlected! ?  Border.all(width: 2,color: Color.fromARGB(133, 124, 77, 255)) : null,
               boxShadow: [
                 BoxShadow(
                   offset: Offset(0, 0),
-                  color: Color.fromARGB(255, 220, 220, 220),
-                  blurRadius: 5,
+                  color: Color.fromARGB(123, 143, 102, 255),
+                  blurRadius: 2,
                   spreadRadius: 2,
                 )
               ],

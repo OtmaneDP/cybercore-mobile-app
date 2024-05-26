@@ -4,15 +4,16 @@
 import 'package:fluttertest/helperclasses/apirequestgenirator.dart';
 
 
-class UserModel {
-  
-  String? email; 
-  String? password; 
+class UserModel{
 
+  final String? email; 
+  final int? id;
+  final token ;
   UserModel({
-    required this.email,
-    required this.password,
+    this.email, 
+    this.id,
+    this.token,
   });
+  
 
- 
 }

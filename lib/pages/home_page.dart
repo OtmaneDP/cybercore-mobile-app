@@ -16,8 +16,8 @@ import 'package:fluttertest/pages/product_details.dart';
 
 class HomePage extends StatefulWidget {
 
-  List ? products ;
-  List? catigorys;
+  List?  products ;
+  List?  catigorys;
   HomePage({
     super.key,
     this.products,
@@ -66,6 +66,20 @@ class HomePageState extends State<HomePage> {
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
+            Container(
+              height: 150,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(33, 124, 77, 255),
+                // border: Border.all(width: 1,color: Colors.black12), 
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Stack(clipBehavior: Clip.none, children: [
+                Positioned(right: 0, top: -8, child:Image.asset("images/test.png",height: 190,)),
+                Positioned(right: 130, bottom: 0, child:Image.asset("images/test.png",height: 115,)),
+                Positioned(bottom: 10,left: 10,child: MaterialButton(onPressed: null, child: Text("New Store"),disabledColor: Colors.blue,textColor: Colors.white,))
+              ],),
+            ),
+            SizedBox(height: 10,),
             Text(
               "Categories",
               style: TextStyle(
@@ -75,14 +89,14 @@ class HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              height: 130,
-              padding: EdgeInsets.symmetric(vertical: 10),
+              height: 110,
+              padding: EdgeInsets.only(top: 20),
               child: ListView.builder(
-                padding: EdgeInsets.only(top: 2),
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.catigorys!.length,
                 itemBuilder: (context, index) => Catigory(
                   catigoryInfo: widget.catigorys![index],
+                  isSlected: index == 0 ? true : false ,
                   isNewtworkImage: true,
                 ),
               ),

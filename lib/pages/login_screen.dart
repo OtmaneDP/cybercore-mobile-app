@@ -85,7 +85,7 @@ class LoginScreenState extends State<LoginScreen> {
                         if(value!.isEmpty){
                           return "the email field is required";
                         }
-                        return !InputValidator().isEmail(value!) ? "the input field value must be an email" : null;
+                        return !InputValidator().isEmail(value) ? "the input field value must be an email" : null;
                       },
                     ),
                     CostumInputField(
@@ -120,11 +120,12 @@ class LoginScreenState extends State<LoginScreen> {
                           if(loginKey.currentState!.validate()){
                             String email  = emailController.text;
                             String password = passwordController.text;
+                            BuildContext? currentContext = context;
                             // send login request withe user credentiales
                             if(await AuthController(context).login(email, password)){
                               Widget  homePage =  await  HomePageController().getView();
-                              Navigator.of(context!).push(MaterialPageRoute(builder: (context) => homePage));
-                            };
+                              Navigator.of(currentContext!).push(MaterialPageRoute(builder: (context) => homePage));
+                            }
                           }
                         },
                         child: Text(

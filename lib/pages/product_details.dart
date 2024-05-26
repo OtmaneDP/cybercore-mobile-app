@@ -1,26 +1,32 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/product.dart';
+import 'package:fluttertest/controllers/cart_page_controller.dart';
+import 'package:fluttertest/controllers/product_controller.dart';
 import 'package:fluttertest/pages/cart_page.dart';
 
 class ProductDetails extends StatefulWidget {
   final Map productInfo;
-  String? selectedColor;
+  String? selectedColor ;
   var imageCarouselController = CarouselController();
   ProductDetails({
     super.key,
     required this.productInfo,
-    this.selectedColor,
-  });
-
+  }){
+    this.selectedColor = productInfo["color"]["0"];
+  }
+   
+ 
   ProductDetailsState createState() {
     return ProductDetailsState();
   }
 }
 
 class ProductDetailsState extends State<ProductDetails> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +35,6 @@ class ProductDetailsState extends State<ProductDetails> {
         // actions: [Icon(Icons.more_vert)],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5),
         color: Colors.white70,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,89 +69,111 @@ class ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
             ]),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              height: 100,
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 2,
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.productInfo["name"],
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w600, 
-                                color: Color.fromARGB(221, 46, 46, 46)
 
-                              ),
-                            ),
-                            Text(
-                              widget.productInfo["catigory"]["name"],
+            // part tow 
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      height: 100,
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 2,
+                              child: Container(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.productInfo["name"],
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w600,
+                                          color:
+                                              Color.fromARGB(221, 46, 46, 46)),
+                                    ),
+                                    Text(
+                                      widget.productInfo["catigory"]["name"],
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    // this is commented tomporery
+                                    // Row(
+                                    //   children: [
+                                    //     Icon(
+                                    //       Icons.star,
+                                    //       color: Color.fromARGB(255, 255, 230, 0),
+                                    //     ),
+                                    //     Icon(Icons.star,
+                                    //         color: Color.fromARGB(255, 255, 230, 0)),
+                                    //     Icon(Icons.star,
+                                    //         color: Color.fromARGB(255, 255, 230, 0)),
+                                    //     Icon(
+                                    //       Icons.star,
+                                    //       color: Colors.grey,
+                                    //     ),
+                                    //   ],
+                                    // )
+                                  ],
+                                ),
+                              )),
+                          Expanded(
+                              child: Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "${widget.productInfo["price"]} DZ",
                               style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.grey,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 55, 0, 207),
                               ),
                             ),
-                            // this is commented tomporery
-                            // Row(
-                            //   children: [
-                            //     Icon(
-                            //       Icons.star,
-                            //       color: Color.fromARGB(255, 255, 230, 0),
-                            //     ),
-                            //     Icon(Icons.star,
-                            //         color: Color.fromARGB(255, 255, 230, 0)),
-                            //     Icon(Icons.star,
-                            //         color: Color.fromARGB(255, 255, 230, 0)),
-                            //     Icon(
-                            //       Icons.star,
-                            //       color: Colors.grey,
-                            //     ),
-                            //   ],
-                            // )
-                          ],
-                        ),
-                      )),
-                  Expanded(
-                      child: Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "${widget.productInfo["price"]} DZ",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 55, 0, 207),
+                          ))
+                        ],
                       ),
                     ),
-                  ))
-                ],
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Ram Size"),
+                    _getRamCheckBoxes(),
+                    Text(
+                      "Color",
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    _getRadiosButton(),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Description",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black54),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    _getDescriptionSpace(),
+                  ],
+                ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Text("Ram Size"),
-             _getRamCheckBoxes(),
-            Text(
-              "Color",
-               style: TextStyle(fontSize: 17, color: Colors.black54,fontWeight: FontWeight.w600),
-            ),
-            SizedBox(height: 10,),
-            _getRadiosButton(),
-            SizedBox(height: 15,),
-            Text(
-              "Description",
-              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: Colors.black54), 
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            _getDescriptionSpace(),
             _getFloatButtons(context)
           ],
         ),
@@ -202,19 +229,19 @@ class ProductDetailsState extends State<ProductDetails> {
         scrollDirection: Axis.horizontal,
         itemCount: 3,
         itemBuilder: (contex, index) {
-          return Radio<String>(
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            visualDensity: VisualDensity.standard,
-            focusColor: Color.fromARGB(31, 33, 149, 243),
-            activeColor: Colors.blue,
-            hoverColor: Color.fromARGB(31, 33, 149, 243),
-            value: "blue${index}",
-            groupValue: widget.selectedColor,
-            onChanged: (value) {
-              setState(() {
-                widget.selectedColor = value!;
-              });
-          });
+          return Transform.scale(
+            scale: 1.6,
+            child:  Radio<String>(
+                materialTapTargetSize: MaterialTapTargetSize.padded,
+                activeColor: Color(_toHexColor(widget.productInfo["color"]["${index}"])),
+                value: widget.productInfo["color"]["${index}"],
+                groupValue: widget.selectedColor,
+                onChanged: (value) {
+                  setState(() {
+                    widget.selectedColor = value;
+                  });
+                }),
+          );
         },
       ),
     );
@@ -264,10 +291,19 @@ class ProductDetailsState extends State<ProductDetails> {
             minWidth: 150,
             height: 45,
             textColor: Colors.white,
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (rout) {
-                return CartPage();
-              }));
+            onPressed: () async {
+
+              // add product to cart 
+              await ProductController.addToCart(
+                productId: widget.productInfo["id"],
+                color: widget.selectedColor.toString(),
+              );
+              
+              // redirect to nextPage Cart page 
+               Navigator.of(context).push(MaterialPageRoute(builder: (rout) {
+                return  CartPageController().getView();
+              })
+              );
             },
           ),
         ],
@@ -277,9 +313,12 @@ class ProductDetailsState extends State<ProductDetails> {
 
   _getAnimtedImages() {
     return CarouselSlider(
-
         carouselController: widget.imageCarouselController,
-        items: List.generate(widget.productInfo["images"].length, (index) => Image.network(widget.productInfo["images"][index]["image_path"],)),
+        items: List.generate(
+            widget.productInfo["images"].length,
+            (index) => Image.network(
+                  widget.productInfo["images"][index]["image_path"],
+                )),
         options: CarouselOptions(
           autoPlay: true,
           scrollDirection: Axis.horizontal,
@@ -289,5 +328,14 @@ class ProductDetailsState extends State<ProductDetails> {
           animateToClosest: true,
           autoPlayCurve: Easing.standard,
         ));
+  }
+
+  int _toHexColor(String color){
+    try{
+      return int.parse(color.replaceAll("#",""),radix: 16)+0xFF000000;
+    }catch(e){
+      return 0;
+    }
+    
   }
 }

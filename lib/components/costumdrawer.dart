@@ -22,7 +22,7 @@ class CostumDrawer extends StatelessWidget{
 
   Widget build(BuildContext){
       return Container(
-        child: FutureBuilder(future: Auth.user(), builder: (context, snapshot){
+        child: FutureBuilder (future: Auth.user(), builder: (context, snapshot){
           if(snapshot.connectionState == ConnectionState.waiting){
             return Container();
           }
