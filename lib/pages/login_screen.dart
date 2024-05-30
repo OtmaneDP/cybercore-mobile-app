@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +11,12 @@ import 'package:fluttertest/controllers/home_page_controller.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
 import 'package:fluttertest/helperclasses/inpute_validator.dart';
 import 'package:fluttertest/models/user_model.dart';
+import 'package:fluttertest/pages/restet%20password/send_email_page.dart';
 import 'package:fluttertest/pages/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-
   LoginScreen({super.key});
-  
+
   @override
   LoginScreenState createState() {
     return LoginScreenState();
@@ -25,11 +24,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  
-  GlobalKey <FormState> loginKey = GlobalKey();
+
+  GlobalKey<FormState> loginKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -76,16 +74,18 @@ class LoginScreenState extends State<LoginScreen> {
                         color: Colors.grey,
                       ),
                       isPassword: false,
-                      onChange: (value){
+                      onChange: (value) {
                         setState(() {
                           emailController.text = value;
                         });
                       },
-                      validator: (value){
-                        if(value!.isEmpty){
+                      validator: (value) {
+                        if (value!.isEmpty) {
                           return "the email field is required";
                         }
-                        return !InputValidator().isEmail(value) ? "the input field value must be an email" : null;
+                        return !InputValidator().isEmail(value)
+                            ? "the input field value must be an email"
+                            : null;
                       },
                     ),
                     CostumInputField(
@@ -100,31 +100,36 @@ class LoginScreenState extends State<LoginScreen> {
                         color: Colors.grey,
                       ),
                       isPassword: true,
-                      validator: (value){
+                      validator: (value) {
                         // if(errorMessage!.isNotEmpty){
                         //   return errorMessage;
                         // }
-                        return  value!.isEmpty ? "password field is required" : null;
+                        return value!.isEmpty
+                            ? "password field is required"
+                            : null;
                       },
-                      onChange: (value){
+                      onChange: (value) {
                         setState(() {
                           passwordController.text = value;
                         });
                       },
                     ),
-                    
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 40),
                       child: MaterialButton(
-                        onPressed: () async{
-                          if(loginKey.currentState!.validate()){
-                            String email  = emailController.text;
+                        onPressed: () async {
+                          if (loginKey.currentState!.validate()) {
+                            String email = emailController.text;
                             String password = passwordController.text;
                             BuildContext? currentContext = context;
                             // send login request withe user credentiales
-                            if(await AuthController(context).login(email, password)){
-                              Widget  homePage =  await  HomePageController().getView();
-                              Navigator.of(currentContext!).push(MaterialPageRoute(builder: (context) => homePage));
+                            if (await AuthController(context)
+                                .login(email, password)) {
+                              Widget homePage =
+                                  await HomePageController().getView();
+                              Navigator.of(currentContext!).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => homePage));
                             }
                           }
                         },
@@ -139,6 +144,28 @@ class LoginScreenState extends State<LoginScreen> {
                         minWidth: MediaQuery.sizeOf(context).width,
                         height: 60,
                         textColor: Colors.white,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      alignment: Alignment.center,
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Do you forget your password?',
+                          style: TextStyle(color: Colors.black, fontSize: 12),
+                          children: [
+                            TextSpan(
+                                text: 'Reset',
+                                style: TextStyle(
+                                    color: Colors.deepPurpleAccent, fontSize: 14),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                       return SendEmailPage();
+                                    }));
+                                  }),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -222,7 +249,8 @@ class LoginScreenState extends State<LoginScreen> {
                           color: Colors.deepPurpleAccent, fontSize: 15),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
                             return SignUpScreen();
                           }));
                         }),
