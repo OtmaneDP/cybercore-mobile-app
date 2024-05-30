@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/cart_item.dart';
 import 'package:fluttertest/controllers/cart_page_controller.dart';
+import 'package:fluttertest/controllers/product_controller.dart';
 import 'package:fluttertest/pages/checkout_screen.dart';
 
 class CartPage extends StatefulWidget{
   
-  List? cartItems;
+  List? cartItems ;
  
   CartPage({
     super.key, 
@@ -27,8 +28,9 @@ class CartPageState extends State<CartPage>{
 
 
   @override
-  void deactivate(){
-    super.deactivate();
+  void dispose(){
+    
+    super.dispose();
     CartPageController.updateCartItems(widget.cartItems!);
   }
 
@@ -64,8 +66,8 @@ class CartPageState extends State<CartPage>{
                         });
                       },
                       onDelete: (){
-                       setState(() {
-                        print("delete");
+                       setState((){
+                          ProductController.deleteFromCart(productId: widget.cartItems![index]["product"]["id"]);
                        });
                       },
                     );

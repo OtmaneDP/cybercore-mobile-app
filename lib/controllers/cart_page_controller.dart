@@ -38,7 +38,6 @@ class CartPageController{
 
   return FutureBuilder(future: ProductController.getCartItems(), builder: (context,snapshot){
       Map? cartItems = jsonDecode(snapshot.data.toString());
-
       return CartPage(cartItems : cartItems!["data"]);
   });
 

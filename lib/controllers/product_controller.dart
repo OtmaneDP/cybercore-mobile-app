@@ -74,4 +74,25 @@ class ProductController{
 
     return response.body;
   }
+
+  static Future <String?> deleteFromCart({required int productId}) async{
+    String? userInfo = await Auth.user();
+
+    Map user = jsonDecode(userInfo.toString());
+    String? userToken = await Auth.getUserAccessToken();
+
+    String userId = user["data"]["id"].toString();
+    userToken = userToken.toString();
+
+    var url = Uri.parse(ApiRequestGenirator().genirateUrl("product/deleteFromCart"));
+    var response =await  http.post(url,headers: {"Accept" : "application/json"},
+       body: {
+          "user_id": userId, 
+          "product_id":  productId.toString(),
+          "token": userToken, 
+       }
+    );
+    print(response.body);
+    return response.body;
+  }
 }

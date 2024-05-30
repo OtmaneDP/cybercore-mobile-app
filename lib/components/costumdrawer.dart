@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/costumDrawerChild.dart';
+import 'package:fluttertest/controllers/cart_page_controller.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
 import 'package:fluttertest/pages/cart_page.dart';
 import 'package:fluttertest/pages/favorite_page.dart';
@@ -61,7 +62,7 @@ class CostumDrawer extends StatelessWidget{
               CostumDrawerChild(
                 title: "Cart",
                 icon: Icon(Icons.shopping_cart),
-                destinationPage:CartPage(),
+                destinationPage:CartPageController().getView(),
               ),
               CostumDrawerChild(
                 title: "Catigorys",

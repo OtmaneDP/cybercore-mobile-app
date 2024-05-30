@@ -166,6 +166,7 @@ class HomePageState extends State<HomePage> {
           ],
         ),
       ),
+
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.transparent,
@@ -203,6 +204,7 @@ class HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+           
             IconButton(
                 onPressed: ()async{
                   // await Auth.user();

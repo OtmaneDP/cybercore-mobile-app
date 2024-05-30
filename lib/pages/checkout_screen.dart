@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/costuminputfield.dart';
+import 'package:fluttertest/components/custom_alert.dart';
 import 'package:fluttertest/controllers/Order_page_controller.dart';
 import 'package:fluttertest/helperclasses/inpute_validator.dart';
 import 'package:fluttertest/pages/cart_page.dart';
@@ -82,7 +83,7 @@ class CheckoutScreenState extends State<CheckoutScreen>{
                 label: Text("last Name",style: TextStyle(fontSize: 14),),
                  validator: (value){
                    if(value!.isEmpty){
-                      return "last lastname input field is required";
+                      return "last name input field is required";
                    }
                   return InputValidator().invalidCharactersValidator(value, "the lastname field have invalid charachters");
                   
@@ -124,7 +125,7 @@ class CheckoutScreenState extends State<CheckoutScreen>{
                   return InputValidator().phonNumberValidator(value);
                 },
                  onChange: (value) => setState(() {
-                  widget.phonNumberController!.text = value;
+                  widget.phonNumberController.text = value;
                  }),
             ),
              SizedBox(height: 10,),
@@ -202,7 +203,20 @@ class CheckoutScreenState extends State<CheckoutScreen>{
                     "amount" : widget.shipingFees["sub_totale"], 
                   };
                   // place order
-                  OrderPageController.placeOrder(widget.cachedCratItems, customerInfo); 
+                  bool orderState = await OrderPageController.placeOrder(widget.cachedCratItems, customerInfo) ;
+                  showDialog(context: context, builder: (context){
+                    
+                    return orderState == true ? 
+                      CustomAlert(
+                        alertIcon: Icon(Icons.done), 
+                        stateMessage: "Success", 
+                        stateDescription: "Place Order withe succefully", 
+                        color: Colors.green) :  CustomAlert(
+                        alertIcon: Icon(Icons.warning,color: Colors.white,), 
+                        stateMessage: "Problem", 
+                        stateDescription: "somthing wrong please try again", 
+                        color: Colors.deepOrangeAccent,);
+                  });
                   
                   }
                   

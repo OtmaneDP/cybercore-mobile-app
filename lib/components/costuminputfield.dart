@@ -34,6 +34,7 @@ class CostumInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       obscureText: isPassword!,
       decoration: InputDecoration(
         label: this.label,

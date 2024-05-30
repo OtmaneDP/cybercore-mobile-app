@@ -6,7 +6,7 @@ import 'package:fluttertest/helperclasses/auth.dart';
 import 'package:http/http.dart' as http;
 class OrderPageController{
 
-  static Future <String?>  placeOrder(List? cartItems,Map customer) async {
+  static Future <bool>  placeOrder(List? cartItems,Map customer) async {
     String? userToken = await Auth.getUserAccessToken();
     String? userInfo = await Auth.user();
 
@@ -28,8 +28,12 @@ class OrderPageController{
       "amount" : customer["amount"].toString(), 
     }, 
     );
-    print(response.body);
-    return response.body;
+
+    var responseBody = jsonDecode(response.body.toString());
+    if(responseBody["status_code"] == 202){
+      return true;
+    }
+    return false;
   }
   
   static List? prparingItemInfo(List? items){
