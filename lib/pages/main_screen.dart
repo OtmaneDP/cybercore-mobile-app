@@ -125,17 +125,17 @@ class MainScreenState extends State<MainScreen> {
                                 Container(
                                   alignment: Alignment.center,
                                   height: MediaQuery.sizeOf(context).height,
-                                  child: Image.asset("images/p (3).jpg"),
+                                  child: Image.asset("images/p (5).png"),
                                 ),
                                 Container(
                                   alignment: Alignment.center,
                                   height: MediaQuery.sizeOf(context).height,
-                                  child: Image.asset("images/p (10).jpg"),
+                                  child: Image.asset("images/p (6).png"),
                                 ),
                                 Container(
                                   alignment: Alignment.center,
                                   height: MediaQuery.sizeOf(context).height,
-                                  child: Image.asset("images/p (9).jpg"),
+                                  child: Image.asset("images/p (7).png"),
                                 ),
                               ],
                               options: CarouselOptions(

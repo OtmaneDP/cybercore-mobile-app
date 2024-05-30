@@ -33,7 +33,7 @@ class CartPageState extends State<CartPage>{
   }
 
   Widget build(BuildContext context){
-   
+
     return Scaffold(
       appBar: AppBar(
         title: Text("My Cart"),
@@ -52,12 +52,21 @@ class CartPageState extends State<CartPage>{
                  itemCount: widget.cartItems!.length,
                  itemBuilder: (context,index){
                     return CartItem(
-                      contity: widget.cartItems![index]["contete"],
+                     
                       item: widget.cartItems![index],
                       changeQontity: (newQontity){
                         setState(() {
-                          widget.cartItems![index]["contete"] = newQontity;
+                          int currentProductContete = widget.cartItems![index]["product"]["contete"];
+                          int cartItemContete = widget.cartItems![index]["cart_item"]["contete"];
+                          if( currentProductContete > cartItemContete){
+                            widget.cartItems![index]["cart_item"]["contete"] = newQontity;
+                          }
                         });
+                      },
+                      onDelete: (){
+                       setState(() {
+                        print("delete");
+                       });
                       },
                     );
                  }
@@ -73,11 +82,11 @@ class CartPageState extends State<CartPage>{
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Sub Totale: ",style: TextStyle(
+                    Text("Sub Totale:",style: TextStyle(
                       color: Colors.black87,
                       fontSize: 16.5,
                     ),),
-                    Text("3000 DZ",style: TextStyle(
+                    Text("${_calculateAmount()} DZ",style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
                       color:Color.fromARGB(221, 36, 36, 36),
@@ -87,11 +96,11 @@ class CartPageState extends State<CartPage>{
                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Delivry free: ",style: TextStyle(
+                    Text("Delivry fees: ",style: TextStyle(
                       color: Colors.black87,
                       fontSize: 16.5,
                     ),),
-                    Text("5.00DZ",style: TextStyle(
+                    Text("0.00DZ",style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
                       color: Color.fromARGB(221, 36, 36, 36),
@@ -105,7 +114,7 @@ class CartPageState extends State<CartPage>{
                       color: Colors.black87,
                       fontSize: 16.5,
                     ),),
-                    Text("40%",style: TextStyle(
+                    Text("0%",style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
                       color: Color.fromARGB(221, 36, 36, 36),
@@ -125,7 +134,7 @@ class CartPageState extends State<CartPage>{
                   color: Colors.deepPurpleAccent,
                   onPressed: (){
                     Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                      return CheckoutScreen(); 
+                      return CheckoutScreen(cachedCratItems: widget.cartItems,shipingFees: _getFees(),); 
                     }));
                   },
                   elevation: 1,
@@ -146,4 +155,20 @@ class CartPageState extends State<CartPage>{
       ),
     ); 
   }   
+
+  int _calculateAmount(){
+    int subTotale = 0;
+    for(Map item in widget.cartItems!){
+      subTotale =  (item["cart_item"]["contete"]*item["product"]["price"]) + subTotale; 
+    }
+    return subTotale;
+  }
+  Map <String , int> _getFees(){
+    Map <String , int> fees = {
+      "sub_totale" : _calculateAmount(), 
+      "delivery_fees" : 0, 
+      "descount" : 0, 
+    };
+    return fees;
+  }
 } 

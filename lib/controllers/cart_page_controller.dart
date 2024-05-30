@@ -31,15 +31,15 @@ class CartPageController{
         "token" : userToken,
       },
     );
-    print(response.body);
     return response.body; 
   }
   
   getView(){
 
   return FutureBuilder(future: ProductController.getCartItems(), builder: (context,snapshot){
-      Map cartItems = jsonDecode(snapshot.data.toString());
-      return CartPage(cartItems : cartItems["data"] );
+      Map? cartItems = jsonDecode(snapshot.data.toString());
+
+      return CartPage(cartItems : cartItems!["data"]);
   });
 
  }

@@ -62,10 +62,23 @@ class HomePageState extends State<HomePage> {
       ),
       body: Container(
         padding: EdgeInsets.all(10),
-        color: Colors.white70,
+        color: Colors.white,
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
+            Text("New",style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: Color.fromARGB(190, 0, 0, 0),
+            ),),
+            Divider(
+              height: 15,
+              endIndent: 200,
+              indent: 2,
+              thickness: 0.2,
+              color: Colors.black38,
+              
+            ),
             Container(
               height: 150,
               decoration: BoxDecoration(
@@ -84,9 +97,17 @@ class HomePageState extends State<HomePage> {
               "Categories",
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 color: Color.fromARGB(190, 0, 0, 0),
               ),
+            ),
+             Divider(
+              height: 15,
+              endIndent: 200,
+              indent: 2,
+              thickness: 0.2,
+              color: Colors.black38,
+              
             ),
             Container(
               height: 110,
@@ -105,18 +126,18 @@ class HomePageState extends State<HomePage> {
               height: 20,
             ),
             Text(
-              "lest Steeling",
+              "Lest Steeling",
               style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
                 color: Color.fromARGB(190, 0, 0, 0),
               ),
             ),
             const Divider(
-              height: 7,
+              height: 15,
               endIndent: 200,
               indent: 2,
-              thickness: 0.6,
+              thickness: 0.2,
               color: Colors.black38,
             ),
             SizedBox(

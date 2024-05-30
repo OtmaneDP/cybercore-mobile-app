@@ -63,7 +63,7 @@ class LoginScreenState extends State<LoginScreen> {
                     Text(
                       "Login to Your Account",
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 20,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
                       ),
@@ -139,7 +139,6 @@ class LoginScreenState extends State<LoginScreen> {
                         minWidth: MediaQuery.sizeOf(context).width,
                         height: 60,
                         textColor: Colors.white,
-                        elevation: 0.2,
                       ),
                     ),
                   ],

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class CartItem extends StatefulWidget{
   
-  int? contity;
   Map? item;
   final Function(int)? changeQontity;
+  final Function? onDelete;
   CartItem({
     super.key, 
-    this.contity,
     this.item,
     this.changeQontity,
+    this.onDelete,
   });
 
   CartItemState createState(){
@@ -46,7 +46,7 @@ class CartItemState extends State<CartItem>{
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: Image.asset("images/test.png",
+              child: Image.network(widget.item!["product"]["images"][0]["image_path"],
               fit: BoxFit.contain,
             ),
             ),
@@ -62,23 +62,26 @@ class CartItemState extends State<CartItem>{
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Pc Laptop Dell",style: TextStyle(
+                    Text(widget.item!["product"]["name"],style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600
                     ),),
-                    Icon(Icons.cancel,color: Colors.grey[300],)
+                   IconButton(onPressed: (){
+                     widget.onDelete!();
+                   }, 
+                   icon:  Icon(Icons.cancel,color: Colors.grey[300],)),
                   ],
                 ),
-                Text("1 TB",style: TextStyle(
+                Text("On Stock",style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  color: Colors.black45
+                  color: Colors.deepPurpleAccent
                 ),),
                 Expanded(child: Container(
                   alignment: Alignment.bottomLeft,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("570.00 DZ",style: TextStyle(
+                      Text("${widget.item!["product"]["price"].toString()} DZ",style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16.5,
                       ),),
@@ -99,9 +102,9 @@ class CartItemState extends State<CartItem>{
                               ),
                               onPressed: (){
                                 setState(() {
-                                  if(widget.item!["contete"] > 1){
-                                    widget.item!["contete"] = widget.item!["contete"] - 1;
-                                    widget.changeQontity!.call(widget.item!["contete"]);
+                                  if(widget.item!["cart_item"]["contete"] > 1){
+                                    widget.item!["cart_item"]["contete"] = widget.item!["cart_item"]["contete"] - 1;
+                                    widget.changeQontity!.call(widget.item!["cart_item"]["contete"]);
                                   }
                                 });
                               },
@@ -113,7 +116,7 @@ class CartItemState extends State<CartItem>{
                             ),
                             Container(
                               margin: EdgeInsets.only(left: 10,right: 10),
-                              child: Text(widget.item!["contete"].toString(),style: TextStyle(
+                              child: Text(widget.item!["cart_item"]["contete"].toString(),style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black87
@@ -132,9 +135,10 @@ class CartItemState extends State<CartItem>{
                               ),
                               onPressed: (){
                                 setState(() {
-                                  if(widget.item!["contete"] >= 1){
-                                    widget.item!["contete"] = widget.item!["contete"] + 1;
-                                    widget.changeQontity!.call(widget.item!["contete"]);
+                                  
+                                  if(widget.item!["cart_item"]["contete"] >= 1 && widget.item!["cart_item"]["contete"] < widget.item!["product"]["contete"] ){
+                                    widget.item!["cart_item"]["contete"] = widget.item!["cart_item"]["contete"] + 1;
+                                    widget.changeQontity!.call(widget.item!["cart_item"]["contete"]);
                                   }
                                 });
                               },
