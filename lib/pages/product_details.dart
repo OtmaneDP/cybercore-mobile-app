@@ -298,9 +298,9 @@ class ProductDetailsState extends State<ProductDetails> {
                 productId: widget.productInfo["id"],
                 color: widget.selectedColor.toString(),
               );
-              
+             
               // redirect to nextPage Cart page 
-               Navigator.of(context).push(MaterialPageRoute(builder: (rout) {
+               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (rout) {
                 return  CartPageController().getView();
               })
               );

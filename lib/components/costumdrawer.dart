@@ -15,12 +15,18 @@ import 'package:fluttertest/pages/favorite_page.dart';
 import 'package:fluttertest/pages/main_screen.dart';
 import 'package:fluttertest/pages/myaccount.dart';
 
-class CostumDrawer extends StatelessWidget{
-  
-  const CostumDrawer({super.key});
-  
-  
 
+class CostumDrawer extends StatefulWidget{
+    const CostumDrawer({super.key});
+
+    CostumDrawerState createState(){
+      return CostumDrawerState();
+    }
+
+}
+
+class CostumDrawerState extends State <CostumDrawer>{
+  
   Widget build(BuildContext){
       return Container(
         child: FutureBuilder (future: Auth.user(), builder: (context, snapshot){
@@ -74,22 +80,24 @@ class CostumDrawer extends StatelessWidget{
                 icon: Icon(Icons.info),
                 destinationPage:MainScreen(),
               ),
-              //  Expanded(
-              //   child: Container(
-              //     height: 450,
-              //     alignment: Alignment.bottomCenter,
-              //     child: MaterialButton(
-              //       elevation: 2,
-              //       disabledColor: Colors.deepPurpleAccent,
-              //       minWidth: 200,
-              //       height: 20,
-              //       padding: EdgeInsets.all(18),
-              //       textColor: Colors.white,
-              //       child: Text("Log Out"),
-              //       onPressed: null,
-              //     ),
-              //   ),
-              // ),
+               Expanded(
+                child: Container(
+                  height: 400,
+                  alignment: Alignment.bottomCenter,
+                  child: MaterialButton(
+                    elevation: 2,
+                    color: Colors.deepPurpleAccent,
+                    minWidth: 200,
+                    height: 20,
+                    padding: EdgeInsets.all(18),
+                    textColor: Colors.white,
+                    child: Text("Log Out"),
+                    onPressed: (){
+                      // on press logic 
+                    },
+                  ),
+                ),
+              ),
         
           ],
             );

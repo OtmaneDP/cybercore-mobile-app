@@ -44,6 +44,7 @@ class ProductController{
 
       print("somthing error try again ");
     }
+    print(response.body);
     return response.body;
 
   }

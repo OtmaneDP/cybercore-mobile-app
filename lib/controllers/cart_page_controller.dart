@@ -2,8 +2,10 @@
 
 
 import 'dart:convert';
-
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertest/controllers/product_controller.dart';
 import 'package:fluttertest/helperclasses/apirequestgenirator.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
@@ -11,8 +13,7 @@ import 'package:fluttertest/pages/cart_page.dart';
 import 'package:http/http.dart' as http;
 
 class CartPageController{
-
-
+ 
    
   static Future <String> updateCartItems(List updatedData) async {
     
@@ -31,6 +32,7 @@ class CartPageController{
         "token" : userToken,
       },
     );
+    print("cart item updated withe succefully..");
     return response.body; 
   }
   
@@ -38,7 +40,16 @@ class CartPageController{
 
   return FutureBuilder(future: ProductController.getCartItems(), builder: (context,snapshot){
       Map? cartItems = jsonDecode(snapshot.data.toString());
-      return CartPage(cartItems : cartItems!["data"]);
+       if (snapshot.connectionState == ConnectionState.waiting) {
+        // While data is loading
+        return Container(
+          color: Colors.white,
+          alignment:Alignment.center ,
+          child : CircularProgressIndicator());
+      }
+      return CartPage(
+        cartItems : cartItems!["data"],
+      );
   });
 
  }

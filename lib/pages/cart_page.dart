@@ -17,7 +17,7 @@ class CartPage extends StatefulWidget{
     this.cartItems,
   });
 
-  
+  @override
   CartPageState createState(){
     return CartPageState();
   } 
@@ -32,10 +32,11 @@ class CartPageState extends State<CartPage>{
     
     super.dispose();
     CartPageController.updateCartItems(widget.cartItems!);
+    print("despose cart page");
   }
 
   Widget build(BuildContext context){
-
+   print("rebuild cart page");
     return Scaffold(
       appBar: AppBar(
         title: Text("My Cart"),
@@ -145,7 +146,7 @@ class CartPageState extends State<CartPage>{
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                   height: 60,
                   minWidth: 70,
-                  child: Text("Checkout for 4000 DZ",style: TextStyle(
+                  child: Text("Checkout for ${_calculateAmount()} DZ",style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
                   ),),

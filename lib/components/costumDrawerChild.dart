@@ -36,9 +36,10 @@ class CostumDrawerChild extends StatelessWidget{
         ),),
       ),
       onTap: () {
-       Navigator.of(context).push(MaterialPageRoute(builder: (context){
+        Navigator.of(context).pop();
+        Navigator.of(context).push(MaterialPageRoute(builder: (context){
           return this.destinationPage!;
-       }));
+        }));
       },
     );
   }

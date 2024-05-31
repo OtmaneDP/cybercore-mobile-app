@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+
 import 'package:fluttertest/components/custom_alert.dart';
 import 'package:fluttertest/controllers/home_page_controller.dart';
 import 'package:fluttertest/helperclasses/apirequestgenirator.dart';
@@ -97,12 +98,31 @@ class  AuthController {
           );
         });
     }
-    
     return isRegistred;
   }
 
-  
- 
+  static Future <Map?> changePassword({required String currentPassword, required String newPassword}) async{
+
+    String? userToken = await Auth.getUserAccessToken();
+    String? userInfo = await Auth.user();
+
+    Map user = jsonDecode(userInfo.toString());
+    userToken = userToken.toString();
+
+    var url  = Uri.parse(ApiRequestGenirator().genirateUrl("changepassword"));
+    var response = await http.post(url,headers:{"Accept" : "application/json"},
+      body: {
+        "user_id": user["data"]["id"].toString(), 
+        "current_password": currentPassword, 
+        "new_password": newPassword, 
+        "token": userToken, 
+      }
+    ); 
+    var responseBody = jsonDecode(response.body);
+
+    return responseBody;
+
+  }
 }
 
 

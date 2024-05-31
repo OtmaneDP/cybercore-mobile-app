@@ -33,4 +33,9 @@ class InputValidator{
   String? invalidCharactersValidator(String? value, errorMessage){
     return notHaveInvalidCharachters(value!) ? null : "invalid charackters";
   }
+
+  static bool isValidPassword(input){
+    final RegExp regex = RegExp(r".*[0-9].*");
+    return regex.hasMatch(input);
+  }
 }

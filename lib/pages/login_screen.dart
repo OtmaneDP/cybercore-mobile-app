@@ -127,9 +127,18 @@ class LoginScreenState extends State<LoginScreen> {
                                 .login(email, password)) {
                               Widget homePage =
                                   await HomePageController().getView();
-                              Navigator.of(currentContext!).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => homePage));
+                              Navigator.of(currentContext!).push(MaterialPageRoute(builder: (context){
+                                 return FutureBuilder(future: HomePageController().getView(), builder: (context,AsyncSnapshot <Widget?> snapshot){
+                                    if(snapshot.connectionState == ConnectionState.waiting){
+                                      return Container(
+                                        alignment: Alignment.center,
+                                        color: Colors.white,
+                                        child: CircularProgressIndicator()
+                                      );
+                                    }
+                                    return snapshot.data!;
+                                 });
+                              }));
                             }
                           }
                         },
