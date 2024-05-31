@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
 
   List?  products ;
   List?  catigorys;
+  int activeCatigory = 0;
   HomePage({
     super.key,
     this.products,
@@ -117,8 +118,14 @@ class HomePageState extends State<HomePage> {
                 itemCount: widget.catigorys!.length,
                 itemBuilder: (context, index) => Catigory(
                   catigoryInfo: widget.catigorys![index],
-                  isSlected: index == 0 ? true : false ,
                   isNewtworkImage: true,
+                  index: index,
+                  activeCatigory: widget.activeCatigory,
+                  onACtive: (activeCatigoryIndex){
+                    setState(() {
+                      widget.activeCatigory = activeCatigoryIndex;
+                    });
+                  },
                 ),
               ),
             ),
@@ -153,13 +160,16 @@ class HomePageState extends State<HomePage> {
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: widget.products!.length,
-              itemBuilder: (context, index) => InkWell(
-                onTap: () {
-                  _toDetailsPage(widget.products![index]);
-                },
-                child: Product(
-                  productInfo: widget.products![index],
-                  isNewtworkImage: true,
+              itemBuilder: (context, index) => Visibility(
+                visible: widget.products![index]["catigory_id"] == widget.catigorys![widget.activeCatigory]["id"] ? true : false,
+                child: InkWell(
+                  onTap: () {
+                    _toDetailsPage(widget.products![index]);
+                  },
+                  child: Product(
+                    productInfo: widget.products![index],
+                    isNewtworkImage: true,
+                  ),
                 ),
               ),
             ),
