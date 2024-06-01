@@ -204,16 +204,7 @@ class MainScreenState extends State<MainScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  IconButton(
-                    icon :Icon(Icons.shopping_cart_checkout_rounded,
-                    color: Colors.white,
-                    size: 30,),
-                    onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                      return HomePage();
-                     }));                      
-                    },
-                  ),
+                  Icon(Icons.shopping_cart_checkout_rounded,color: Colors.white,size: 30,),
                   Text(
                     "Cyber Core",
                     style: TextStyle(

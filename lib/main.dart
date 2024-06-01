@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertest/Middlewars/auth_middleware.dart';
+import 'package:fluttertest/helperclasses/auth.dart';
 import 'package:fluttertest/pages/changepassword_page.dart';
 import 'package:fluttertest/pages/home_page.dart';
 import 'package:fluttertest/pages/login_screen.dart';
@@ -33,7 +35,9 @@ class TextChangeState extends State<TextChange>{
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainScreen(),
+      home:  FutureBuilder(future: AuthMiddleware().handle(), builder: (context,snapshot){
+         return snapshot.data!;
+      }),
     );
   } 
 

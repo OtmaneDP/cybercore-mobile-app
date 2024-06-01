@@ -2,13 +2,13 @@
 
 import 'dart:convert';
 
-
 import 'package:fluttertest/components/custom_alert.dart';
 import 'package:fluttertest/controllers/home_page_controller.dart';
 import 'package:fluttertest/helperclasses/apirequestgenirator.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
 import 'package:fluttertest/models/user_model.dart';
 import 'package:fluttertest/pages/home_page.dart';
+import 'package:fluttertest/pages/login_screen.dart';
 import 'package:http/http.dart' as http;
 import "package:flutter/material.dart";
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,18 +53,21 @@ class  AuthController {
       return isAuthurized;
   }
 
-  // Future<String> logOut() async{
-  //   var url = Uri.parse(ApiRequestGenirator().genirateUrl("logout"));
-  //   var response = await http.post(url,
-  //     headers: {
-  //       "Accept" : "application/json",
-  //     },
-  //     body: {
-  //       "token" : 'token',
-  //     }  
-  //   );
-  //   return response.body;
-  // }
+  static Future<String> logOut() async{
+    var url = Uri.parse(ApiRequestGenirator().genirateUrl("logout"));
+    String? userToken = await Auth.getUserAccessToken();
+
+    userToken = userToken.toString();
+    var response = await http.post(url,
+      headers: {
+        "Accept" : "application/json",
+      },
+      body: {
+        "token" : userToken,
+      }  
+    );
+    return response.body;
+  }
 
   Future <bool> register(String email, String password) async{
     bool isRegistred = false;

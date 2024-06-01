@@ -8,16 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/costumDrawerChild.dart';
+import 'package:fluttertest/controllers/authcontroller.dart';
 import 'package:fluttertest/controllers/cart_page_controller.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
 import 'package:fluttertest/pages/cart_page.dart';
 import 'package:fluttertest/pages/favorite_page.dart';
+import 'package:fluttertest/pages/login_screen.dart';
 import 'package:fluttertest/pages/main_screen.dart';
 import 'package:fluttertest/pages/myaccount.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class CostumDrawer extends StatefulWidget{
-    const CostumDrawer({super.key});
+    CostumDrawer({super.key});
 
     CostumDrawerState createState(){
       return CostumDrawerState();
@@ -70,16 +73,6 @@ class CostumDrawerState extends State <CostumDrawer>{
                 icon: Icon(Icons.shopping_cart),
                 destinationPage:CartPageController().getView(),
               ),
-              CostumDrawerChild(
-                title: "Catigorys",
-                icon: Icon(Icons.info),
-                destinationPage:CartPage(),
-              ),
-               CostumDrawerChild(
-                title: "Main Screen",
-                icon: Icon(Icons.info),
-                destinationPage:MainScreen(),
-              ),
                Expanded(
                 child: Container(
                   height: 400,
@@ -92,8 +85,16 @@ class CostumDrawerState extends State <CostumDrawer>{
                     padding: EdgeInsets.all(18),
                     textColor: Colors.white,
                     child: Text("Log Out"),
-                    onPressed: (){
-                      // on press logic 
+                    onPressed: () async{
+                      var response = await AuthController.logOut();
+                      var responseBody = jsonDecode(response);
+                      if(responseBody["status_code"] == 202){
+                        final storage = await SharedPreferences.getInstance();
+                        storage.remove("user_access_token");
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                        return MainScreen();
+                      }));
+    }
                     },
                   ),
                 ),

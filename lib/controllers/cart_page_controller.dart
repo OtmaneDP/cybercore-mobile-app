@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertest/components/custom_progress.dart';
 import 'package:fluttertest/controllers/product_controller.dart';
 import 'package:fluttertest/helperclasses/apirequestgenirator.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
@@ -42,10 +43,7 @@ class CartPageController{
       Map? cartItems = jsonDecode(snapshot.data.toString());
        if (snapshot.connectionState == ConnectionState.waiting) {
         // While data is loading
-        return Container(
-          color: Colors.white,
-          alignment:Alignment.center ,
-          child : CircularProgressIndicator());
+        return CustomeProgress();
       }
       return CartPage(
         cartItems : cartItems!["data"],

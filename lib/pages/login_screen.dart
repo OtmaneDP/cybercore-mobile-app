@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/costuminputfield.dart';
+import 'package:fluttertest/components/custom_progress.dart';
 import 'package:fluttertest/controllers/authcontroller.dart';
 import 'package:fluttertest/controllers/home_page_controller.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
@@ -127,14 +128,10 @@ class LoginScreenState extends State<LoginScreen> {
                                 .login(email, password)) {
                               Widget homePage =
                                   await HomePageController().getView();
-                              Navigator.of(currentContext!).push(MaterialPageRoute(builder: (context){
+                              Navigator.of(currentContext!).pushReplacement(MaterialPageRoute(builder: (context){
                                  return FutureBuilder(future: HomePageController().getView(), builder: (context,AsyncSnapshot <Widget?> snapshot){
                                     if(snapshot.connectionState == ConnectionState.waiting){
-                                      return Container(
-                                        alignment: Alignment.center,
-                                        color: Colors.white,
-                                        child: CircularProgressIndicator()
-                                      );
+                                      return CustomeProgress();
                                     }
                                     return snapshot.data!;
                                  });

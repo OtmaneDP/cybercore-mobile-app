@@ -23,7 +23,7 @@ class Auth {
     Map  expireAt = JwtValidator.getJsonJwtPayload(userToken);
     if(JwtValidator.hasExpired(expireAt["exp"])){
       storage.remove(tokenKey);
-      return "not authunticated";
+      return null;
     }
     return userToken;
   }

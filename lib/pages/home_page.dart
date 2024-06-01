@@ -216,8 +216,35 @@ class HomePageState extends State<HomePage> {
             ),
            
             IconButton(
-                onPressed: ()async{
-                  // await Auth.user();
+                onPressed: (){
+                  showModalBottomSheet(context: context, builder: (context){
+                    return Container(
+                      padding: EdgeInsets.only(left: 10,top: 30),
+                      alignment: Alignment.center,
+                      child: Column(children: [
+                        Text("Notifications",style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black54
+                        ),),
+                        ExpansionTile(
+                          shape: Border.all(width: 1,color: const Color.fromARGB(255, 220, 220, 220)),
+                          title: Text("Order Accepted",style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromARGB(163, 0, 0, 0)
+                          ),),
+                          leading: Image.asset("images/test.png",width: 30,height: 30,),
+                          trailing: Text("hei"),
+                          subtitle: Text("your order has accepted , your order will be sent to your address",
+                            style: TextStyle(fontSize: 10,color: Colors.grey,fontWeight: FontWeight.w600),
+                          ),
+                          childrenPadding: EdgeInsets.zero,
+                          expandedAlignment: Alignment.centerLeft,
+                        ),
+                      ],),
+                    );
+                  });
                 },
                 icon: Icon(Icons.notifications_none_sharp, color: Colors.black)),
           ],
