@@ -29,7 +29,11 @@ class MainScreenState extends State<MainScreen> {
               child: Row(
                 children: [
                   Container(
-                    color: Color.fromARGB(150, 124, 77, 255),
+                    
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(199, 124, 77, 255),
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(50),bottomRight:Radius.circular(50) )
+                    ),
                     padding: EdgeInsets.only(left: 10),
                     alignment: Alignment.centerLeft,
                     width: MediaQuery.sizeOf(context).width / 2 + 12,
@@ -40,11 +44,11 @@ class MainScreenState extends State<MainScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "Gamming laptops",
+                            "Gamming Laptops",
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 37,
-                              color: Colors.deepPurpleAccent,
+                              color: Colors.white,
                               height: 1.2,
                             ),
                           ),
@@ -74,8 +78,9 @@ class MainScreenState extends State<MainScreen> {
                                   title: Text(
                                     "Finde your favorite Items",
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600),
+                                        color: Colors.black54,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700),
                                   ),
                                 ),
                                 ListTile(
@@ -87,8 +92,9 @@ class MainScreenState extends State<MainScreen> {
                                   title: Text(
                                     "Esy & Safe Payment ",
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600),
+                                      color: Colors.black54,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700),
                                   ),
                                 ),
                                 ListTile(
@@ -100,8 +106,10 @@ class MainScreenState extends State<MainScreen> {
                                   title: Text(
                                     "Product Delivery at Home",
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600),
+                                        color: Colors.black54,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700),
+                                       
                                   ),
                                 ),
                               ],
@@ -113,7 +121,7 @@ class MainScreenState extends State<MainScreen> {
                   ),
                   Container(
                     color: Colors.white70,
-                    width: MediaQuery.sizeOf(context).width / 2 - 40,
+                    width: MediaQuery.sizeOf(context).width / 2 - 20,
                     height: MediaQuery.sizeOf(context).height,
                     child: Stack(
                       children: [

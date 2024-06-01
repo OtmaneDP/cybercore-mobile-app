@@ -33,6 +33,7 @@ class OrderPageController{
     if(responseBody["status_code"] == 202){
       return true;
     }
+    print(responseBody);
     return false;
   }
   
@@ -40,7 +41,8 @@ class OrderPageController{
     List filtredProduct = [] ; 
 
     for(Map item in items!){
-      filtredProduct.add(
+      if(item["product"]["state"] == 1){
+         filtredProduct.add(
         {
           "cart_item" : item["cart_item"], 
           "no_modifyed_item": {
@@ -49,6 +51,8 @@ class OrderPageController{
           }
         },
       );
+      } 
+     
     }
     return filtredProduct;
   }

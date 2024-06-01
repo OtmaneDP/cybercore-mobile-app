@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertest/components/custom_alert.dart';
 import 'package:fluttertest/components/product.dart';
 import 'package:fluttertest/controllers/cart_page_controller.dart';
 import 'package:fluttertest/controllers/product_controller.dart';
@@ -143,8 +144,8 @@ class ProductDetailsState extends State<ProductDetails> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text("Ram Size"),
-                    _getRamCheckBoxes(),
+                    // Text("Ram Size"),
+                    // _getRamCheckBoxes(),
                     Text(
                       "Color",
                       style: TextStyle(
@@ -294,16 +295,25 @@ class ProductDetailsState extends State<ProductDetails> {
             onPressed: () async {
 
               // add product to cart 
-              await ProductController.addToCart(
-                productId: widget.productInfo["id"],
-                color: widget.selectedColor.toString(),
-              );
+              if(widget.productInfo["state"] == 1){
+                await ProductController.addToCart(
+                  productId: widget.productInfo["id"],
+                  color: widget.selectedColor.toString(),
+                );
+                 // redirect to nextPage Cart page 
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (rout) {
+                  return  CartPageController().getView();
+                  })
+                );
+              }
+              showDialog(context: context, builder: (context){
+                  return CustomAlert(
+                    alertIcon: Icon(Icons.production_quantity_limits_sharp,color: Colors.white,), 
+                    stateMessage: "Problem", 
+                    stateDescription: "Product quantity has Limited", 
+                    color: const Color.fromARGB(215, 155, 39, 176));
+              });
              
-              // redirect to nextPage Cart page 
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (rout) {
-                return  CartPageController().getView();
-              })
-              );
             },
           ),
         ],

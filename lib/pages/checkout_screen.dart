@@ -204,6 +204,7 @@ class CheckoutScreenState extends State<CheckoutScreen>{
                   };
                   // place order
                   bool orderState = await OrderPageController.placeOrder(widget.cachedCratItems, customerInfo) ;
+                  Navigator.of(context).pop();
                   showDialog(context: context, builder: (context){
                     
                     return orderState == true ? 

@@ -77,7 +77,9 @@ class CartItemState extends State<CartItem>{
                      icon:  Icon(Icons.cancel,color: Colors.grey[300],)),
                     ],
                   ),
-                  Text("On Stock",style: TextStyle(
+                  Text(
+                    widget.item!["product"]["state"] == 1 ? "Availabel" : "Not Availabel",
+                    style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.deepPurpleAccent
                   ),),
