@@ -11,8 +11,13 @@ class ProductController{
 
   static Future <String?> getAll()async{
     String? userToken = await Auth.getUserAccessToken();
+    String? userInfo = await Auth.user();
+    
     userToken = userToken.toString();
-    var url = Uri.parse(ApiRequestGenirator().genirateUrl("product/all?token=${userToken}")); 
+    Map user = jsonDecode(userInfo.toString());
+    var userId = user["data"]["id"];
+
+    var url = Uri.parse(ApiRequestGenirator().genirateUrl("product/all?token=${userToken}&user_id=${userId}")); 
     var response = await http.get(url,
       headers: {"Accept":"application/json"},
     );

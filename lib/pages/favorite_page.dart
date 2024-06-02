@@ -4,9 +4,13 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/product.dart';
 
 class FavoritePage extends StatefulWidget{
-
-  FavoritePage({super.key});
-
+  
+  List? favoritedProducts;
+  FavoritePage({
+    super.key, 
+    required this.favoritedProducts,
+  });
+  
   @override
   FavoritePageState createState(){
     return FavoritePageState();
@@ -34,23 +38,21 @@ class FavoritePageState extends State<FavoritePage>{
             ),
             Expanded(
               child: Container(
-                child:  GridView(
+                child:  GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                   childAspectRatio: 0.75,
-                  ),
-              
-                children: [
-                  // Product(imagePath: "images/test.png", title: "product"),
-                  // Product(imagePath: "images/test.png", title: "product"),
-                  // Product(imagePath: "images/test.png", title: "product"),
-                  // Product(imagePath: "images/test.png", title: "product"),
-                  //  Product(imagePath: "images/test.png", title: "product"),
-                  // Product(imagePath: "images/test.png", title: "product"),
-              
-                ],
+                ),
+                itemCount: widget.favoritedProducts!.length,
+                itemBuilder: (context, index){
+                  return Product(
+                    productInfo: widget.favoritedProducts![index]["product"],
+                    isNewtworkImage: true,
+                    togglableHeart: false,
+                  );
+                },  
               ),
               ),
             )

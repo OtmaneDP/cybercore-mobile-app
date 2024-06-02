@@ -36,7 +36,7 @@ class TextChangeState extends State<TextChange>{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home:  FutureBuilder(future: AuthMiddleware().handle(), builder: (context,snapshot){
-         return snapshot.data!;
+        return snapshot.data!;
       }),
     );
   } 

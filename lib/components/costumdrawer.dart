@@ -10,6 +10,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/costumDrawerChild.dart';
 import 'package:fluttertest/controllers/authcontroller.dart';
 import 'package:fluttertest/controllers/cart_page_controller.dart';
+import 'package:fluttertest/controllers/favorite_controller.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
 import 'package:fluttertest/pages/cart_page.dart';
 import 'package:fluttertest/pages/favorite_page.dart';
@@ -66,7 +67,7 @@ class CostumDrawerState extends State <CostumDrawer>{
               CostumDrawerChild(
                 title: "Favorit",
                 icon: Icon(Icons.favorite),
-                destinationPage:FavoritePage(),
+                destinationPage:FavoriteController().getView(),
               ),
               CostumDrawerChild(
                 title: "Cart",

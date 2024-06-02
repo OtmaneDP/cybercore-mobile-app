@@ -12,6 +12,7 @@ import 'package:fluttertest/pages/cart_page.dart';
 class ProductDetails extends StatefulWidget {
   final Map productInfo;
   String? selectedColor ;
+ 
   var imageCarouselController = CarouselController();
   ProductDetails({
     super.key,
@@ -57,17 +58,13 @@ class ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               Positioned(
-                bottom: -20,
-                right: 10,
-                child: IconButton(
-                  onPressed: () {
-                    return null;
-                  },
-                  icon: Icon(
+                bottom: -15,
+                right: 20,
+                child: Icon(
                     Icons.favorite,
-                    color: Colors.red,
+                    color: widget.productInfo["favorited"] == 1 ? Colors.red : Colors.grey,
+                    size: 25,
                   ),
-                ),
               ),
             ]),
 

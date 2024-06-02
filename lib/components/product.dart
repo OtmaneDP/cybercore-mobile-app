@@ -1,3 +1,4 @@
+import 'package:fluttertest/controllers/favorite_controller.dart';
 import 'package:fluttertest/pages/login_screen.dart';
 import 'package:fluttertest/pages/product_details.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,16 +8,19 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class Product extends StatefulWidget {
-  Color heartColor = const Color.fromARGB(255, 225, 225, 225);
+  Color? heartColor;
   Map? productInfo ;
   bool? isNewtworkImage = false;
+  bool? togglableHeart = true;
   Product({
     super.key,
     this.productInfo,
     this.isNewtworkImage,
+    this.togglableHeart,
   });
   @override
   ProductState createState() {
+    heartColor = productInfo!["favorited"] == 1 ? Colors.red : Color.fromARGB(255, 225, 225, 225);
     return ProductState();
   }
 }
@@ -75,17 +79,18 @@ class ProductState extends State<Product> {
                             Text(
                               "${widget.productInfo!["price"]}DZ",
                               style: TextStyle(
-                                fontSize: 17,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             Text(
-                              "3000 DZ",
+                              "Availabe",
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w400,
-                                decoration: TextDecoration.lineThrough,
-                                decorationColor: Colors.deepPurpleAccent,
+                                color: Colors.deepPurpleAccent,
+                                decoration: widget.productInfo!["state"] == 0 ? TextDecoration.lineThrough : null,
+                                // decorationColor: Colors.deepPurpleAccent,
                               ),
                             )
                           ],
@@ -108,13 +113,16 @@ class ProductState extends State<Product> {
                             ),
                             onPressed: null,
                           ),
+                          widget.togglableHeart == false ? Icon(Icons.favorite,color: Colors.red,) : //Or 
                           IconButton(
                             icon: Icon(
                               Icons.favorite,
                               color: widget.heartColor,
                             ),
-                            onPressed: () => {
-                              setState(() {
+                            onPressed: () async {
+                              int productId = widget.productInfo!["id"];
+                              setState((){
+                                
                                 widget.heartColor ==
                                         Color.fromARGB(255, 225, 225, 225)
                                     ? widget.heartColor =
@@ -122,7 +130,12 @@ class ProductState extends State<Product> {
                                     : // Or
                                     widget.heartColor =
                                         Color.fromARGB(255, 225, 225, 225);
-                              })
+                              });
+                              if(widget.heartColor == Color.fromARGB(255, 255, 92, 80)){
+                                FavoriteController.addToFavorite(productId: productId);
+                              }else if(widget.heartColor == Color.fromARGB(255, 225, 225, 225)){
+                                FavoriteController.popFromFavorite(productId: productId);
+                              }
                             },
                           ),
                         ],
