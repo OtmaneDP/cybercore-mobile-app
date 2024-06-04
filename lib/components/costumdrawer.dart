@@ -11,6 +11,7 @@ import 'package:fluttertest/components/costumDrawerChild.dart';
 import 'package:fluttertest/controllers/authcontroller.dart';
 import 'package:fluttertest/controllers/cart_page_controller.dart';
 import 'package:fluttertest/controllers/favorite_controller.dart';
+import 'package:fluttertest/controllers/home_page_controller.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
 import 'package:fluttertest/pages/cart_page.dart';
 import 'package:fluttertest/pages/favorite_page.dart';
@@ -22,10 +23,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CostumDrawer extends StatefulWidget{
     CostumDrawer({super.key});
-
+    List pages = [FavoriteController().getView(), CartPageController().getView()];
     CostumDrawerState createState(){
       return CostumDrawerState();
     }
+
+
 
 }
 
@@ -60,19 +63,22 @@ class CostumDrawerState extends State <CostumDrawer>{
                 ),
               ),
               CostumDrawerChild(
+                counted: false,
                 title: "My Account",
                 icon: Icon(Icons.account_circle),
-                destinationPage: MyAccountPage(userData: data["data"],),
+                destinationPage: MyAccountPage(userData: data["data"],
+              
+              ),
               ),
               CostumDrawerChild(
                 title: "Favorit",
                 icon: Icon(Icons.favorite),
-                destinationPage:FavoriteController().getView(),
+                destinationPage: widget.pages[0],
               ),
               CostumDrawerChild(
                 title: "Cart",
                 icon: Icon(Icons.shopping_cart),
-                destinationPage:CartPageController().getView(),
+                destinationPage: widget.pages[1],
               ),
                Expanded(
                 child: Container(

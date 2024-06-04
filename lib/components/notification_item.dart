@@ -25,7 +25,7 @@ class NotificationItemState extends State <NotificationItem> {
     return Visibility(
       visible: visiblity,
       child: Container(
-      
+        margin: EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
           color: Colors.white, 
           border: Border.all(width: 1, color: Color.fromARGB(255, 223, 223, 223)),

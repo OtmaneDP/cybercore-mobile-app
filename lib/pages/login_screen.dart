@@ -41,7 +41,7 @@ class LoginScreenState extends State<LoginScreen> {
           children: [
             Container(
               alignment: Alignment.center,
-              height: 170,
+              height: 100,
               child: Text(
                 "Cyber Core",
                 style: TextStyle(
@@ -51,7 +51,7 @@ class LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Container(
-              height: 300,
+              height: 400,
               width: MediaQuery.sizeOf(context).width - 50,
               child: Form(
                 key: loginKey,

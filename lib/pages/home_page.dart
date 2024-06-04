@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:ui';
 
@@ -8,11 +9,14 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/catigory.dart';
 import 'package:fluttertest/components/costumdrawer.dart';
+import 'package:fluttertest/components/custome_countable_icon.dart';
 import 'package:fluttertest/components/notification_item.dart';
 import 'package:fluttertest/components/product.dart';
 import 'package:fluttertest/controllers/authcontroller.dart';
+import 'package:fluttertest/controllers/notification_controller.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
 import 'package:fluttertest/pages/login_screen.dart';
+import 'package:fluttertest/pages/notification_page.dart';
 import 'package:fluttertest/pages/product_details.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,6 +25,11 @@ class HomePage extends StatefulWidget {
   List?  catigorys;
   int activeCatigory = 0;
   List? notifications;
+  TextEditingController searchController = TextEditingController();
+  GlobalKey <FormState> searchFormKey  = GlobalKey();
+
+  int? activeIcon ;
+  
   HomePage({
     super.key,
     this.products,
@@ -40,21 +49,30 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
+    print(getNotificationCounter());
     return Scaffold(
       appBar: AppBar(
-          title: TextFormField(
-            cursorWidth: 0.4,
-            cursorHeight: 21,
-            cursorColor: Colors.grey,
-            style: TextStyle(
-              fontSize: 13,
-            ),
-            decoration: InputDecoration(
-              hintText: "Search",
-              border: InputBorder.none,
-              filled: true,
-              fillColor: Colors.grey[100],
-              hoverColor: Colors.grey[200],
+          title: Form(
+          key: widget.searchFormKey,
+            child: TextFormField(
+              cursorWidth: 0.4,
+              cursorHeight: 21,
+              cursorColor: Colors.grey,
+              style: TextStyle(
+                fontSize: 13,
+              ),
+              decoration: InputDecoration(
+                hintText: "Search",
+                border: InputBorder.none,
+                filled: true,
+                fillColor: Colors.grey[100],
+                hoverColor: Colors.grey[200],
+              ),
+              onChanged: (value){
+                 setState(() {
+                   widget.searchController.text = value;
+                 });
+              },
             ),
           ),
           leadingWidth: 30,
@@ -169,9 +187,12 @@ class HomePageState extends State<HomePage> {
                   onTap: () {
                     _toDetailsPage(widget.products![index]);
                   },
-                  child: Product(
-                    productInfo: widget.products![index],
-                    isNewtworkImage: true,
+                  child: Visibility(
+                    visible: inSearchResulte(widget.products![index]["name"]),
+                    child: Product(
+                      productInfo: widget.products![index],
+                      isNewtworkImage: true,
+                    ),
                   ),
                 ),
               ),
@@ -181,70 +202,57 @@ class HomePageState extends State<HomePage> {
       ),
 
       bottomNavigationBar: Container(
+        
         decoration: BoxDecoration(
-          color: Colors.transparent,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(88, 158, 158, 158),
+              offset: Offset(0,0),
+              blurRadius: 4,
+              spreadRadius: 2,
+            ),
+          ]
+
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            IconButton(
-                onPressed: null, icon: Icon(Icons.home_outlined, color: Colors.black)),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(width: 2,color: Colors.deepPurpleAccent),
-              ),
-              child:Stack(
-                clipBehavior: Clip.none,
-                children: [
-                   IconButton(
-                  onPressed: (){
-                    print("test");
-                  },
-                  icon: Icon(Icons.shopping_cart_outlined, color: Colors.deepPurpleAccent)),
-                  Positioned(
-                    right: -7,
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 15,
-                      height: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.red, 
-                        borderRadius: BorderRadius.circular(50)),
-                        child: Text("1",style: TextStyle(color: Colors.white,fontSize: 9.5,fontWeight: FontWeight.w700),),
-                    ),
-                  ),
-                ],
-              ),
+            CountableIcon(
+              index:1,
+              icon: Icons.delivery_dining_sharp,
+              activeIconIndex: widget.activeIcon,
+              counter: 0,
+              onClick: (activeIcon){
+                setState(() {
+                  widget.activeIcon = activeIcon;
+                });
+              },
             ),
-           
-            IconButton(
-                onPressed: (){
-                  showModalBottomSheet(context: context,isScrollControlled: true, builder: (context){
-                    return Container(
-                      height: 400,
-                      padding: EdgeInsets.only(left: 10,top: 30, right: 10),
-                      alignment: Alignment.center,
-                      child: ListView(
-                        children: [
-                        Column(children: [
-                            Text("Notifications",style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(225, 0, 0, 0)
-                            ),),
-                            SizedBox(height: 20,),
-                            ...List.generate(
-                              widget.notifications!.length,(index) => NotificationItem(
-                                notification: widget.notifications![index],
-                              ) ),
-                          ],),
-                        ],
-                      ),
-                    );
-                  });
-                },
-                icon: Icon(Icons.notifications_none_sharp, color: Colors.black)),
+            CountableIcon(
+              index: 0,
+              activeIconIndex: widget.activeIcon,
+              icon: Icons.shopify,
+              counter: getNotificationCounter(),
+              onClick: null,
+            ),
+            CountableIcon(
+              index: 0,
+              activeIconIndex: widget.activeIcon,
+              icon: Icons.notifications,
+              counter: getNotificationCounter(),
+              onClick: (activeIndex) async {
+                 var response  = await NotificationController.update(isRead: 1); 
+                 setState((){
+                  widget.notifications = jsonDecode(response)["data"];
+                  widget.activeIcon = activeIndex;
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                    return  NotificationController().getView();
+                  }));
+                 });
+              },
+            ),
           ],
         ),
       ),
@@ -255,5 +263,25 @@ class HomePageState extends State<HomePage> {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
       return ProductDetails(productInfo: productInfo);
     }));
+  }
+
+  bool inSearchResulte(String productName){
+    int searchInputLength = widget.searchController.text.length;
+
+    if(productName.length >= searchInputLength){
+      String substredProductName =  productName.substring(0,searchInputLength);
+      return widget.searchController.text == substredProductName ? true : false;   
+    }
+    return false;
+  } 
+  int getNotificationCounter()  {
+    int notificationCounter = 0;
+
+    for(var notification in widget.notifications! ){
+       if(notification["is_read"] == 0){
+         notificationCounter++;
+       }
+    }
+    return notificationCounter;
   }
 }

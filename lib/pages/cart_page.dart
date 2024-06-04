@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/cart_item.dart';
+import 'package:fluttertest/components/custom_alert.dart';
 import 'package:fluttertest/controllers/cart_page_controller.dart';
 import 'package:fluttertest/controllers/product_controller.dart';
 import 'package:fluttertest/pages/checkout_screen.dart';
@@ -68,7 +69,9 @@ class CartPageState extends State<CartPage>{
                       },
                       onDelete: (){
                        setState((){
+                         
                           ProductController.deleteFromCart(productId: widget.cartItems![index]["product"]["id"]);
+                           widget.cartItems!.removeAt(index);
                        });
                       },
                     );
@@ -136,9 +139,18 @@ class CartPageState extends State<CartPage>{
                   padding: EdgeInsets.only(left: 40,right: 40,),
                   color: Colors.deepPurpleAccent,
                   onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                    if(widget.cartItems!.length > 0 ){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
                       return CheckoutScreen(cachedCratItems: widget.cartItems,shipingFees: _getFees(),); 
                     }));
+                    }else{
+                      showDialog(context: context, builder: (context){
+                        return CustomAlert(alertIcon: Icon(Icons.warning, color: Colors.white, size: 50,), 
+                          stateMessage: "", 
+                          stateDescription: "your cart has Empty", 
+                          color: Colors.purple);
+                      });
+                    }
                   },
                   elevation: 1,
                   disabledColor: Colors.deepPurpleAccent,

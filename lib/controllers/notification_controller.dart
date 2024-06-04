@@ -2,8 +2,11 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:fluttertest/components/custom_progress.dart';
 import 'package:fluttertest/helperclasses/apirequestgenirator.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
+import 'package:fluttertest/pages/notification_page.dart';
 import 'package:http/http.dart' as http;
 class NotificationController{
 
@@ -40,6 +43,38 @@ class NotificationController{
     ); 
     print(response.body);
     return response.body;
+  }
+   static Future <String> update({required int isRead}) async{
+    String? userInfo = await Auth.user();
+
+    Map user = jsonDecode(userInfo.toString());
+    String? userToken = await Auth.getUserAccessToken();
+
+    String userId = user["data"]["id"].toString();
+    userToken = userToken.toString();
+     var url = Uri.parse(ApiRequestGenirator().genirateUrl("notification/update")); 
+    var response = await http.post(url, headers: {"Accept" : "application/json"},
+      body: {
+        "user_id" : userId, 
+        "is_read" : isRead.toString(),
+        "token" : userToken,
+      }
+    ); 
+    
+    return response.body;
+  }
+
+
+  getView() {
+    return FutureBuilder(future: getAll(), builder: (context, snapshot){
+      var data = jsonDecode(snapshot.data.toString());
+       if (snapshot.connectionState == ConnectionState.waiting) {
+        // While data is loading
+        return CustomeProgress();
+      }
+       return NotificationPage(notifications: data["data"]);
+    });
+     
   }
 
 }
