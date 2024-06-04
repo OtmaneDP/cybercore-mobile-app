@@ -105,13 +105,21 @@ class HomePageState extends State<HomePage> {
               height: 150,
               decoration: BoxDecoration(
                 color: Color.fromARGB(33, 124, 77, 255),
-                // border: Border.all(width: 1,color: Colors.black12), 
+                
+                boxShadow:  [
+                  // BoxShadow(
+                  //   blurRadius: 5,
+                  //   offset: Offset(-2, 0), 
+                  //   color: Color.fromARGB(134, 138, 137, 137)
+                  // )
+                ],
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Stack(clipBehavior: Clip.none, children: [
+                Positioned(top: 20, left:10 , child: Text("New Offers",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: Colors.black54),)),
                 Positioned(right: 0, top: -8, child:Image.asset("images/test.png",height: 190,)),
                 Positioned(right: 130, bottom: 0, child:Image.asset("images/test.png",height: 115,)),
-                Positioned(bottom: 10,left: 10,child: MaterialButton(onPressed: null, child: Text("New Store"),disabledColor: Colors.blue,textColor: Colors.white,))
+                Positioned(bottom: 10,left: 10,child: MaterialButton(onPressed: null, child: Text("New Store"),disabledColor: const Color.fromARGB(255, 109, 56, 255),textColor: Colors.white,))
               ],),
             ),
             SizedBox(height: 10,),
@@ -233,14 +241,14 @@ class HomePageState extends State<HomePage> {
             CountableIcon(
               index: 0,
               activeIconIndex: widget.activeIcon,
-              icon: Icons.shopify,
+              icon: Icons.local_grocery_store_outlined,
               counter: getNotificationCounter(),
               onClick: null,
             ),
             CountableIcon(
               index: 0,
               activeIconIndex: widget.activeIcon,
-              icon: Icons.notifications,
+              icon: Icons.notifications_outlined,
               counter: getNotificationCounter(),
               onClick: (activeIndex) async {
                  var response  = await NotificationController.update(isRead: 1); 

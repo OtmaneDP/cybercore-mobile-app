@@ -8,10 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/costumDrawerChild.dart';
+import 'package:fluttertest/components/custom_progress.dart';
 import 'package:fluttertest/controllers/authcontroller.dart';
 import 'package:fluttertest/controllers/cart_page_controller.dart';
 import 'package:fluttertest/controllers/favorite_controller.dart';
-import 'package:fluttertest/controllers/home_page_controller.dart';
+import 'package:fluttertest/controllers/product_controller.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
 import 'package:fluttertest/pages/cart_page.dart';
 import 'package:fluttertest/pages/favorite_page.dart';
@@ -23,12 +24,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CostumDrawer extends StatefulWidget{
     CostumDrawer({super.key});
-    List pages = [FavoriteController().getView(), CartPageController().getView()];
+
     CostumDrawerState createState(){
       return CostumDrawerState();
     }
 
+  Future <List> getData() async{
+    var userInfo = await Auth.user(); 
+    var favoriteProducts = await FavoriteController.getFavoriteProducts();
+    var cart = await ProductController.getCartItems();
 
+    return [userInfo, favoriteProducts , cart];
+  }
 
 }
 
@@ -36,12 +43,12 @@ class CostumDrawerState extends State <CostumDrawer>{
   
   Widget build(BuildContext){
       return Container(
-        child: FutureBuilder (future: Auth.user(), builder: (context, snapshot){
+        child: FutureBuilder (future: widget.getData() , builder: (context, snapshot){
           if(snapshot.connectionState == ConnectionState.waiting){
-            return Container();
+            return CustomeProgress();
           }
           if(snapshot.connectionState == ConnectionState.done){
-            var data = jsonDecode(snapshot.data.toString());
+            var data = jsonDecode(snapshot.data![0].toString());
             return  ListView(
           children: [
               Container(
@@ -63,22 +70,24 @@ class CostumDrawerState extends State <CostumDrawer>{
                 ),
               ),
               CostumDrawerChild(
-                counted: false,
+                 counted : false,
                 title: "My Account",
                 icon: Icon(Icons.account_circle),
                 destinationPage: MyAccountPage(userData: data["data"],
-              
+               
               ),
               ),
               CostumDrawerChild(
                 title: "Favorit",
                 icon: Icon(Icons.favorite),
-                destinationPage: widget.pages[0],
+                destinationPage:FavoriteController().getView(),
+                counter: jsonDecode(snapshot.data![1].toString())["data"].length,
               ),
               CostumDrawerChild(
                 title: "Cart",
                 icon: Icon(Icons.shopping_cart),
-                destinationPage: widget.pages[1],
+                destinationPage:CartPageController().getView(),
+                counter: jsonDecode(snapshot.data![2].toString())["data"].length ,
               ),
                Expanded(
                 child: Container(

@@ -33,7 +33,6 @@ class FavoriteController {
         "token" : userToken, 
       }
     ); 
-    print(response.body);
     return response.body;
 
   }

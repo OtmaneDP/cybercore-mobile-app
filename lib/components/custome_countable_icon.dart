@@ -35,7 +35,7 @@ class CountableIcon extends StatelessWidget{
                       onClick!.call(index!);
                     }
                   },
-                  icon: Icon(this.icon!, color: index == activeIconIndex ? Colors.deepPurpleAccent :   Colors.grey)),
+                  icon: Icon(this.icon!, color: this.counter! > 0 ? Colors.deepPurpleAccent :  Colors.grey)),
                   Visibility(
                     visible: this.counter == 0 || this.counter == 0  ? false : true,
                     child: Positioned(
