@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/product.dart';
+import 'package:fluttertest/pages/product_details.dart';
 
 class FavoritePage extends StatefulWidget{
   
@@ -47,10 +48,25 @@ class FavoritePageState extends State<FavoritePage>{
                 ),
                 itemCount: widget.favoritedProducts!.length,
                 itemBuilder: (context, index){
-                  return Product(
-                    productInfo: widget.favoritedProducts![index]["product"],
-                    isNewtworkImage: true,
-                    togglableHeart: false,
+                  return InkWell(
+                    onTap: (){
+                     
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                        return ProductDetails(productInfo: widget.favoritedProducts![index]);
+                      }));
+                    },
+                    child: Visibility(
+                      visible: widget.favoritedProducts![index]["favorited"] == 0 ? false : true,
+                      child: Product(
+                        productInfo: widget.favoritedProducts![index],
+                        isNewtworkImage: true,
+                        onFavorite: (value){
+                          setState(() {
+                            widget.favoritedProducts![index]["favorited"] = value;
+                          });
+                        },
+                      ),
+                    ),
                   );
                 },  
               ),

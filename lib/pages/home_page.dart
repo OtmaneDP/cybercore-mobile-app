@@ -8,6 +8,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertest/components/catigory.dart';
 import 'package:fluttertest/components/costumdrawer.dart';
+import 'package:fluttertest/components/notification_item.dart';
 import 'package:fluttertest/components/product.dart';
 import 'package:fluttertest/controllers/authcontroller.dart';
 import 'package:fluttertest/helperclasses/auth.dart';
@@ -19,10 +20,12 @@ class HomePage extends StatefulWidget {
   List?  products ;
   List?  catigorys;
   int activeCatigory = 0;
+  List? notifications;
   HomePage({
     super.key,
     this.products,
-    this.catigorys
+    this.catigorys,
+    this.notifications,
   });
   
 
@@ -217,32 +220,27 @@ class HomePageState extends State<HomePage> {
            
             IconButton(
                 onPressed: (){
-                  showModalBottomSheet(context: context, builder: (context){
+                  showModalBottomSheet(context: context,isScrollControlled: true, builder: (context){
                     return Container(
-                      padding: EdgeInsets.only(left: 10,top: 30),
+                      height: 400,
+                      padding: EdgeInsets.only(left: 10,top: 30, right: 10),
                       alignment: Alignment.center,
-                      child: Column(children: [
-                        Text("Notifications",style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black54
-                        ),),
-                        ExpansionTile(
-                          shape: Border.all(width: 1,color: const Color.fromARGB(255, 220, 220, 220)),
-                          title: Text("Order Accepted",style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromARGB(163, 0, 0, 0)
-                          ),),
-                          leading: Image.asset("images/test.png",width: 30,height: 30,),
-                          trailing: Text("hei"),
-                          subtitle: Text("your order has accepted , your order will be sent to your address",
-                            style: TextStyle(fontSize: 10,color: Colors.grey,fontWeight: FontWeight.w600),
-                          ),
-                          childrenPadding: EdgeInsets.zero,
-                          expandedAlignment: Alignment.centerLeft,
-                        ),
-                      ],),
+                      child: ListView(
+                        children: [
+                        Column(children: [
+                            Text("Notifications",style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(225, 0, 0, 0)
+                            ),),
+                            SizedBox(height: 20,),
+                            ...List.generate(
+                              widget.notifications!.length,(index) => NotificationItem(
+                                notification: widget.notifications![index],
+                              ) ),
+                          ],),
+                        ],
+                      ),
                     );
                   });
                 },

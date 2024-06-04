@@ -11,12 +11,12 @@ class Product extends StatefulWidget {
   Color? heartColor;
   Map? productInfo ;
   bool? isNewtworkImage = false;
-  bool? togglableHeart = true;
+  Function (int)? onFavorite; 
   Product({
     super.key,
     this.productInfo,
     this.isNewtworkImage,
-    this.togglableHeart,
+    this.onFavorite
   });
   @override
   ProductState createState() {
@@ -113,7 +113,6 @@ class ProductState extends State<Product> {
                             ),
                             onPressed: null,
                           ),
-                          widget.togglableHeart == false ? Icon(Icons.favorite,color: Colors.red,) : //Or 
                           IconButton(
                             icon: Icon(
                               Icons.favorite,
@@ -134,6 +133,9 @@ class ProductState extends State<Product> {
                               if(widget.heartColor == Color.fromARGB(255, 255, 92, 80)){
                                 FavoriteController.addToFavorite(productId: productId);
                               }else if(widget.heartColor == Color.fromARGB(255, 225, 225, 225)){
+                                if(widget.onFavorite != null ){
+                                  widget.onFavorite!.call(0);
+                                }
                                 FavoriteController.popFromFavorite(productId: productId);
                               }
                             },

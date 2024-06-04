@@ -21,6 +21,7 @@ class Auth {
       return null;
     }
     Map  expireAt = JwtValidator.getJsonJwtPayload(userToken);
+
     if(JwtValidator.hasExpired(expireAt["exp"])){
       storage.remove(tokenKey);
       return null;

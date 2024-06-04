@@ -8,7 +8,7 @@ import 'package:fluttertest/controllers/authcontroller.dart';
 import 'package:fluttertest/helperclasses/inpute_validator.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  ChangePasswordPage();
+  ChangePasswordPage({super.key});
   TextEditingController passwordController = TextEditingController();
   TextEditingController newPassworddController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -38,6 +38,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                Transform.rotate( angle: 40,child: Center(child:Icon(Icons.key,color: Colors.deepPurpleAccent,size: 50,),)),
                 Container(
                   alignment: Alignment.center,
                   child: Column(

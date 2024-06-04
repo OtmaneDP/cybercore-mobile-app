@@ -291,8 +291,17 @@ class ProductDetailsState extends State<ProductDetails> {
             textColor: Colors.white,
             onPressed: () async {
 
+              if(widget.productInfo["state"] == 0){
+                  showDialog(context: context, builder: (context){
+                  return CustomAlert(
+                    alertIcon: Icon(Icons.production_quantity_limits_sharp,color: Colors.white,), 
+                    stateMessage: "Problem", 
+                    stateDescription: "Product quantity has Limited", 
+                    color: const Color.fromARGB(215, 155, 39, 176));
+                  });
+              }
               // add product to cart 
-              if(widget.productInfo["state"] == 1){
+              else if(widget.productInfo["state"] == 1){
                 await ProductController.addToCart(
                   productId: widget.productInfo["id"],
                   color: widget.selectedColor.toString(),
@@ -303,13 +312,7 @@ class ProductDetailsState extends State<ProductDetails> {
                   })
                 );
               }
-              showDialog(context: context, builder: (context){
-                  return CustomAlert(
-                    alertIcon: Icon(Icons.production_quantity_limits_sharp,color: Colors.white,), 
-                    stateMessage: "Problem", 
-                    stateDescription: "Product quantity has Limited", 
-                    color: const Color.fromARGB(215, 155, 39, 176));
-              });
+            
              
             },
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class CostumInputField extends StatelessWidget {
@@ -10,6 +11,8 @@ class CostumInputField extends StatelessWidget {
   final Text? textErorr;
   final Text? label;
   final bool? isPassword;
+  final int? length ;
+  final List <TextInputFormatter>? formate;
   final FormFieldValidator<String>? validator;
   final Function(String)? onChange;
   static OutlineInputBorder border = OutlineInputBorder(
@@ -29,14 +32,20 @@ class CostumInputField extends StatelessWidget {
       this.validator,
       this.controller,
       this.onChange(value)?,
-      required this.isPassword});
+      required this.isPassword, 
+      this.length,
+      this.formate,
+      });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       
+      maxLength: this.length,
       obscureText: isPassword!,
+      inputFormatters: this.formate,
       decoration: InputDecoration(
+        counterText: "",
         label: this.label,
         border: CostumInputField.border,
         enabledBorder: CostumInputField.border,
