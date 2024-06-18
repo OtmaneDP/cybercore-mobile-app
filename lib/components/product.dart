@@ -16,16 +16,22 @@ class Product extends StatefulWidget {
     super.key,
     this.productInfo,
     this.isNewtworkImage,
-    this.onFavorite
+    this.onFavorite, 
+    this.heartColor,
   });
   @override
   ProductState createState() {
-    heartColor = productInfo!["favorited"] == 1 ? Colors.red : Color.fromARGB(255, 225, 225, 225);
     return ProductState();
   }
 }
 
 class ProductState extends State<Product> {
+  @override
+  void initState() {
+
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(

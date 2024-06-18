@@ -18,7 +18,7 @@ class ProductDetails extends StatefulWidget {
     super.key,
     required this.productInfo,
   }){
-    this.selectedColor = productInfo["color"]["0"];
+    this.selectedColor = productInfo["color"][0];
   }
    
  
@@ -231,8 +231,8 @@ class ProductDetailsState extends State<ProductDetails> {
             scale: 1.6,
             child:  Radio<String>(
                 materialTapTargetSize: MaterialTapTargetSize.padded,
-                activeColor: Color(_toHexColor(widget.productInfo["color"]["${index}"])),
-                value: widget.productInfo["color"]["${index}"],
+                activeColor: Color(_toHexColor(widget.productInfo["color"][index])),
+                value: widget.productInfo["color"][index],
                 groupValue: widget.selectedColor,
                 onChanged: (value) {
                   setState(() {

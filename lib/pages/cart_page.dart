@@ -140,7 +140,7 @@ class CartPageState extends State<CartPage>{
                   color: Colors.deepPurpleAccent,
                   onPressed: (){
                     if(widget.cartItems!.length > 0 ){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
                       return CheckoutScreen(cachedCratItems: widget.cartItems,shipingFees: _getFees(),); 
                     }));
                     }else{

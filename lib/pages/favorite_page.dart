@@ -55,18 +55,17 @@ class FavoritePageState extends State<FavoritePage>{
                         return ProductDetails(productInfo: widget.favoritedProducts![index]);
                       }));
                     },
-                    child: Visibility(
-                      visible: widget.favoritedProducts![index]["favorited"] == 0 ? false : true,
-                      child: Product(
+                    child: Product(
+                        heartColor: Colors.red,
                         productInfo: widget.favoritedProducts![index],
                         isNewtworkImage: true,
                         onFavorite: (value){
                           setState(() {
                             widget.favoritedProducts![index]["favorited"] = value;
+                            widget.favoritedProducts!.removeAt(index);
                           });
                         },
                       ),
-                    ),
                   );
                 },  
               ),

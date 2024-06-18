@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertest/components/Products_filter.dart';
 import 'package:fluttertest/components/catigory.dart';
 import 'package:fluttertest/components/costumdrawer.dart';
 import 'package:fluttertest/components/custome_countable_icon.dart';
@@ -23,7 +24,7 @@ class HomePage extends StatefulWidget {
 
   List?  products ;
   List?  catigorys;
-  int activeCatigory = 0;
+  int activeCatigory = -1;
   List? notifications;
   TextEditingController searchController = TextEditingController();
   GlobalKey <FormState> searchFormKey  = GlobalKey();
@@ -139,13 +140,26 @@ class HomePageState extends State<HomePage> {
               color: Colors.black38,
               
             ),
+           Row(children: [
+            InkWell(
+              onTap: () => setState(() {
+                widget.activeCatigory = -1;
+              }),
+              child: Container(
+                width: 40,height: 40,child: Text("All",style: TextStyle(fontSize: 20),),
+                alignment: Alignment.center,
+                decoration:  BoxDecoration(border: Border(bottom: BorderSide(color:widget.activeCatigory == -1 ? Colors.deepPurpleAccent:Colors.black26,width: 1.5)))
+                )),
+              
+           ],),
             Container(
               height: 110,
               padding: EdgeInsets.only(top: 20),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.catigorys!.length,
-                itemBuilder: (context, index) => Catigory(
+                itemBuilder: (context, index){
+                  return Catigory(
                   catigoryInfo: widget.catigorys![index],
                   isNewtworkImage: true,
                   index: index,
@@ -155,7 +169,8 @@ class HomePageState extends State<HomePage> {
                       widget.activeCatigory = activeCatigoryIndex;
                     });
                   },
-                ),
+                );
+                }
               ),
             ),
             SizedBox(
@@ -179,32 +194,11 @@ class HomePageState extends State<HomePage> {
             SizedBox(
               height: 20,
             ),
-            GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 13,
-                crossAxisSpacing: 5,
-                childAspectRatio: 0.7,
-              ),
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: widget.products!.length,
-              itemBuilder: (context, index) => Visibility(
-                visible: widget.products![index]["catigory_id"] == widget.catigorys![widget.activeCatigory]["id"] ? true : false,
-                child: InkWell(
-                  onTap: () {
-                    _toDetailsPage(widget.products![index]);
-                  },
-                  child: Visibility(
-                    visible: inSearchResulte(widget.products![index]["name"]),
-                    child: Product(
-                      productInfo: widget.products![index],
-                      isNewtworkImage: true,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+           ProductsFilter(
+             products: widget.products,
+             catigorys: widget.catigorys,
+             activeCatigory: widget.activeCatigory,
+           )
           ],
         ),
       ),
@@ -267,11 +261,7 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  void _toDetailsPage(Map productInfo) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return ProductDetails(productInfo: productInfo);
-    }));
-  }
+ 
 
   bool inSearchResulte(String productName){
     int searchInputLength = widget.searchController.text.length;
